@@ -73,9 +73,9 @@ pp<-function(i){ # function that plots total observed, predicted, forecasted, an
   data <- data[data$Week.ended>=as.Date("2020-03-01"),] # for March onwards
   mdf <- reshape2::melt(data, id.var = c("Week.ended", "lwr", "upr"))
   mdf <- mdf[!(mdf$variable == "signal"),] # for March onwards
-  mdf$variable <- factor(mdf$variable, levels=c("fit","var","var_covid"), #, "signal"), # comment out signal for March onwards
+  mdf$variable <- factor(mdf$variable, levels=c("fit","var","var_covid"), #, "signal" # comment out signal for March onwards
                          labels=c(paste("Forecasted 06/03-", format(max(mdf$Week.ended), "%d/%m"), sep = ""),
-                                  "Observed all-cause","Registered non-COVID deaths"))#, "Predicted")) # take out Predicted for March onwards
+                                  "Observed all-cause","Registered non-COVID deaths")) # , "Predicted" # take out Predicted for March onwards
   p<-ggplot(mdf, aes(x = Week.ended, y = value, colour = variable))+
     geom_ribbon(aes(ymin = lwr, ymax = upr), colour = NA, fill = "grey70",alpha=0.5)+
     geom_line() + 
@@ -84,7 +84,7 @@ pp<-function(i){ # function that plots total observed, predicted, forecasted, an
     theme_bw(base_size = 12, base_family = "Helvetica")+ theme_minimal() +
     theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
     ggtitle(gsub("[.]"," ",sub(".csv", "",i)))+
-    scale_colour_manual(values = c("Black","Red", "Purple")) + #, "Blue")) + # take out Blue for March onwards
+    scale_colour_manual(values = c("Black","Red", "Purple")) + #, "Blue" # take out Blue for March onwards
     labs(colour = "Deaths", y ="Deaths", x = "")
   
   return(p)
@@ -93,10 +93,13 @@ pp<-function(i){ # function that plots total observed, predicted, forecasted, an
 legendgrob <- g_legend(pp("Yorkshire.and.The.Humber.csv") + theme(legend.position = "bottom"))
 
 # plot of England & Wales from March onwards
+#pdf("Deaths_EW_Marchonwards.pdf", width = 10, height = 4)
 grid.arrange(pp("England.csv") + theme(legend.position = "none"), pp("Wales.csv") +theme(legend.position = "none"),
              bottom = legendgrob, ncol=2) #pdf 7x3
+#dev.off()
 
 # plot England regions
+pdf("Regional_forecasts_England_fullforecast.pdf", width = 10, height = 7)
 grid.arrange(pp("Yorkshire.and.The.Humber.csv")+ylim(0, 3500)+theme(legend.position = "none"),
   pp("North.East.csv")+ylim(0, 3500)+theme(legend.position = "none"),
   pp("North.West.csv")+ylim(0, 3500)+theme(legend.position = "none"),
@@ -107,15 +110,19 @@ grid.arrange(pp("Yorkshire.and.The.Humber.csv")+ylim(0, 3500)+theme(legend.posit
   pp("South.East.csv")+ylim(0, 3500)+theme(legend.position = "none"),
   pp("South.West.csv")+ylim(0, 3500)+theme(legend.position = "none"),
   bottom = legendgrob, ncol=3) #pdf 10 x 7
+dev.off()
 
 # plot older age groups (all sexes)
-grid.arrange(pp("All.85..csv")+theme(legend.position = "none")+ggtitle("All 85+ yrs")+ylim(0, 10000),
-             pp("All.75.84.csv")+theme(legend.position = "none")+ggtitle("All 75-84 yrs")+ylim(0, 10000),
-             pp("All.65.74.csv")+theme(legend.position = "none")+ggtitle("All 65-74 yrs")+ylim(0, 10000),
-             pp("All.45.64.csv")+theme(legend.position = "none")+ggtitle("All 45-64 yrs")+ylim(0, 10000),
+pdf("Deaths_Allolder_Maronwards.pdf", width = 7, height = 5)
+grid.arrange(pp("All.85..csv")+theme(legend.position = "none")+ggtitle("All 85+ yrs"),#+ylim(0, 10000),
+             pp("All.75.84.csv")+theme(legend.position = "none")+ggtitle("All 75-84 yrs"),#+ylim(0, 10000),
+             pp("All.65.74.csv")+theme(legend.position = "none")+ggtitle("All 65-74 yrs"),#+ylim(0, 10000),
+             pp("All.45.64.csv")+theme(legend.position = "none")+ggtitle("All 45-64 yrs"),#+ylim(0, 10000),
              bottom = legendgrob, ncol=2) #pdf 7x5
+dev.off()
 
 # plot all sex and older ages
+pdf("Deaths_AllolderAllsex_fullforecast.pdf", width = 7, height = 10)
 grid.arrange(pp("Male.85..csv")+theme(legend.position = "none")+ggtitle("Male 85+ yrs"),
              pp("Female.85..csv")+theme(legend.position = "none")+ggtitle("Female 85+ yrs"),
              pp("Male.75.84.csv")+theme(legend.position = "none")+ggtitle("Male 75-84 yrs"),
@@ -127,6 +134,7 @@ grid.arrange(pp("Male.85..csv")+theme(legend.position = "none")+ggtitle("Male 85
              pp("Male.15.44.csv")+theme(legend.position = "none")+ggtitle("Male 15-44 yrs"),
              pp("Female.15.44.csv")+theme(legend.position = "none")+ggtitle("Female 15-44 yrs"),
              bottom = legendgrob, ncol=2) #pdf 7x10
+dev.off()
 
 # tables
 # Regional table
@@ -163,17 +171,24 @@ temp3<-Regional_temp %>% group_by(region) %>% summarise(alldeaths = sum(deaths),
                                                         per.exces.ncovid.lwr=100*sum(deaths-covid-upr)/sum(deaths),
                                                         exces.ncovid.upr = sum(deaths-covid-lwr),
                                                         per.exces.ncovid.upr=100*sum(deaths-covid-lwr)/sum(deaths))
-temp3$exptd <- paste(round(temp3$exptd), " (", round(temp3$per.expted, digits = 1), ") ", sep = "")
-temp3$exptd_bounds <- paste(round(temp3$exptd.lwr)," - ", round(temp3$exptd.upr), 
-                            " (", round(temp3$per.expted.lwr, digits = 1)," - ", 
-                            round(temp3$per.expted.upr, digits = 1), ")", sep = "")
+temp3$alldeaths <- format(temp3$alldeaths, big.mark=",")
+temp3$exptd <- paste(format(round(temp3$exptd), big.mark=","), " (", 
+                     format(round(temp3$per.expted, digits = 1), big.mark=","), "%)", 
+                     sep = "")
+temp3$exptd_bounds <- paste(format(round(temp3$exptd.lwr), big.mark=","), " -", 
+                            format(round(temp3$exptd.upr), big.mark=","), " (", 
+                            round(temp3$per.expted.lwr, digits = 1),"% - ", 
+                            round(temp3$per.expted.upr, digits = 1), "%)", sep = "")
 
-temp3$exces.ncovid <- paste(round(temp3$exces.ncovid), " (", round(temp3$per.exces.ncovid, digits = 1), ") ", sep = "")
-temp3$exces_bounds <- paste(round(temp3$exces.ncovid.lwr)," - ", round(temp3$exces.ncovid.upr), 
-                            " (", round(temp3$per.exces.ncovid.lwr, digits = 1)," - ", 
-                            round(temp3$per.exces.ncovid.upr, digits = 1), ")", sep = "")
+temp3$exces.ncovid <- paste(format(round(temp3$exces.ncovid), big.mark=","), " (", 
+                            round(temp3$per.exces.ncovid, digits = 1), "%)", sep = "")
+temp3$exces_bounds <- paste(format(round(temp3$exces.ncovid.lwr), big.mark=","), " - ", 
+                            format(round(temp3$exces.ncovid.upr), big.mark=","), " (", 
+                            round(temp3$per.exces.ncovid.lwr, digits = 1),"% - ", 
+                            round(temp3$per.exces.ncovid.upr, digits = 1), "%)", sep = "")
 
-temp3$covid.num <- paste(round(temp3$covid.num), " (", round(temp3$per.covid, digits = 1), ")", sep = "")
+temp3$covid.num <- paste(format(round(temp3$covid.num), big.mark=","), " (", 
+                         round(temp3$per.covid, digits = 1), "%)", sep = "")
 temp3$region <- gsub("[.]"," ",temp3$region)
 EW <- temp3[temp3$region %in% c("England", "Wales"),]
 temp3 <- temp3[!temp3$region %in% c("England", "Wales"),]
@@ -182,6 +197,28 @@ regional_tab <- temp3 %>% select('region', 'alldeaths', 'exptd', 'exptd_bounds',
 colnames(regional_tab) <- c("Region", "Reported all-cause deaths", "Expected (%)", "Expected 95% prediction interval (%)", "Covid (%)",
                             "Excess non-COVID", "Excess non-COVID 95% prediction interval (%)")
 write.csv(regional_tab, "Table1.csv")
+
+# Table A2: EW excess deaths each week
+tab3 <- Regional_temp %>% group_by(region) %>% filter(region %in% c("England", "Wales")) %>% 
+  mutate(excess.ncovid = paste(format(round(excess.deaths.expected), big.mark = ","), " (",
+                               format(round(excess.deaths.lwr), big.mark = ","), ",",
+                               format(round(excess.deaths.upr), big.mark = ","), ")", sep = "")) %>%
+  select(Week.ended, region, excess.ncovid)
+tab3 <- reshape2::dcast(tab3, region~Week.ended)
+write.csv(tab3, "TableA2.csv")
+
+# Table A3: Coefficient multiplier covid to non-covid excess deaths
+Regional_temp$coeff <- Regional_temp$excess.deaths.expected/Regional_temp$covid
+Regional_temp$coeff_lwr <- Regional_temp$excess.deaths.lwr/Regional_temp$covid
+Regional_temp$coeff_upr <- Regional_temp$excess.deaths.upr/Regional_temp$covid
+Regional_temp <- Regional_temp[Regional_temp$Week.ended>=as.Date("2020-04-03"),]
+temp_coeff <- Regional_temp %>% mutate(coeff_bounds = paste(round(Regional_temp$coeff, digits = 2), " (",
+                                                            round(Regional_temp$coeff_lwr, digits = 2), " - ",
+                                                            round(Regional_temp$coeff_upr, digits = 2), ")", sep =""))
+temp_coeff <- temp_coeff %>% select("Week.ended", "region", "coeff_bounds")
+temp_coeff$region <- gsub("[.]"," ",temp3$region)
+temp_coeff <- reshape2::dcast(temp_coeff, region~Week.ended)
+write.csv(temp_coeff, "TableA2Coeff_Regional.csv")
 
 # Age group table
 Agegrp_temp<-rbind(ExtractData("All.85..csv"),
@@ -219,17 +256,24 @@ temp4<-Agegrp_temp %>% group_by(region) %>% summarise(alldeaths = sum(deaths),
                                                       per.exces.ncovid.lwr=100*sum(deaths-covid-upr)/sum(deaths),
                                                       exces.ncovid.upr = sum(deaths-covid-lwr),
                                                       per.exces.ncovid.upr=100*sum(deaths-covid-lwr)/sum(deaths))
-temp4$exptd <- paste(round(temp4$exptd), " (", round(temp4$per.expted, digits = 1), "%) ", sep = "")
-temp4$exptd_bounds <- paste(round(temp4$exptd.lwr)," - ", round(temp4$exptd.upr), 
-                            " (", round(temp4$per.expted.lwr, digits = 1),"% - ", 
+temp4$alldeaths <- format(temp4$alldeaths, big.mark=",")
+temp4$exptd <- paste(format(round(temp4$exptd), big.mark=","), " (", 
+                     format(round(temp4$per.expted, digits = 1), big.mark=","), "%)", 
+                     sep = "")
+temp4$exptd_bounds <- paste(format(round(temp4$exptd.lwr), big.mark=","), " -", 
+                            format(round(temp4$exptd.upr), big.mark=","), " (", 
+                            round(temp4$per.expted.lwr, digits = 1),"% - ", 
                             round(temp4$per.expted.upr, digits = 1), "%)", sep = "")
 
-temp4$exces.ncovid <- paste(round(temp4$exces.ncovid), " (", round(temp4$per.exces.ncovid, digits = 1), "%) ", sep = "")
-temp4$exces_bounds <- paste(round(temp4$exces.ncovid.lwr)," - ", round(temp4$exces.ncovid.upr), 
-                            " (", round(temp4$per.exces.ncovid.lwr, digits = 1),"% - ", 
+temp4$exces.ncovid <- paste(format(round(temp4$exces.ncovid), big.mark=","), " (", 
+                            round(temp4$per.exces.ncovid, digits = 1), "%)", sep = "")
+temp4$exces_bounds <- paste(format(round(temp4$exces.ncovid.lwr), big.mark=","), " - ", 
+                            format(round(temp4$exces.ncovid.upr), big.mark=","), " (", 
+                            round(temp4$per.exces.ncovid.lwr, digits = 1),"% - ", 
                             round(temp4$per.exces.ncovid.upr, digits = 1), "%)", sep = "")
 
-temp4$covid.num <- paste(round(temp4$covid.num), " (", round(temp4$per.covid, digits = 1), "%)", sep = "")
+temp4$covid.num <- paste(format(round(temp4$covid.num), big.mark=","), " (", 
+                         round(temp4$per.covid, digits = 1), "%)", sep = "")
 temp4$region <- gsub("[.]"," ",temp4$region)
 temp4$region <- gsub("All", "All:", temp4$region)
 temp4$region <- gsub("Female", "Female:", temp4$region)
