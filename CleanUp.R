@@ -4,7 +4,7 @@ library(KFAS)
 library(readxl)
 library(stringr)
 setwd("/Users/alessandralochen/Documents/covid-19 hospitalizations/ONS deaths/data")
-
+latestdata <- 'publishedweek222020.xlsx'
 s<-function(pos,data){
   data[pos[1],1]<-paste0("All ",data[pos[1],1])
   data[pos[2],1]<-paste0("Male ",data[pos[2],1])
@@ -64,7 +64,7 @@ for (file in group2) {
 }
 ############
 ############
-data<-read_xlsx('publishedweek182020.xlsx',sheet='Weekly figures 2020' ,col_names = FALSE)
+data<-read_xlsx(latestdata,sheet='Weekly figures 2020' ,col_names = FALSE)
 ###########
 ###########
 data<-data[complete.cases(data[,3:8]),]

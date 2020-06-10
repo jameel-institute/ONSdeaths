@@ -4,8 +4,8 @@ library(KFAS)
 library(readxl)
 library(stringr)
 library(dplyr)
-setwd("/Volumes/GoogleDrive/My Drive/Covid-19/mortality/data")
-
+setwd("/Users/alessandralochen/Documents/covid-19 hospitalizations/ONS deaths/data")
+latestdata <- 'publishedweek222020.xlsx'
 s<-function(pos,data){
   data[pos[1],1]<-paste0("All ",data[pos[1],1])
   data[pos[2],1]<-paste0("Male ",data[pos[2],1])
@@ -17,7 +17,7 @@ s<-function(pos,data){
 # registrations 
 ###################
 ###################
-data<-read_xlsx('publishedweek182020.xlsx',sheet='Covid-19 - Weekly registrations' ,col_names = FALSE,range='A5:BC86')
+data<-read_xlsx(latestdata,sheet='Covid-19 - Weekly registrations' ,col_names = FALSE,range='A5:BC86')
 ###################
 ###################
 data<-data[complete.cases(data[,3:8]),]
@@ -38,12 +38,12 @@ data[data==":"]<-NA
 data<-as.data.frame(t(data))
 data<-data[complete.cases(data),]
 
-write.table(data, file=paste0("/Volumes/GoogleDrive/My Drive/Covid-19/mortality/ONSCovid/Covid_Registration.csv"), row.names=FALSE, col.names=FALSE, sep=",")
+write.table(data, file=paste0("/Users/alessandralochen/Documents/covid-19 hospitalizations/ONS deaths/ONSCovid/Covid_Registration.csv"), row.names=FALSE, col.names=FALSE, sep=",")
 
 
 # The 2020 file needs to be cleaned up further
 
-data<-read.csv("/Volumes/GoogleDrive/My Drive/Covid-19/mortality/ONSCovid/Covid_Registration.csv",stringsAsFactors = FALSE)
+data<-read.csv("/Users/alessandralochen/Documents/covid-19 hospitalizations/ONS deaths/ONSCovid/Covid_Registration.csv",stringsAsFactors = FALSE)
 
 
 df <- data %>% mutate(
@@ -72,13 +72,13 @@ df <- data %>% mutate(
 
 df<-df[,c(1:3,64:94)]
 
-write.table(df, file=paste0("/Volumes/GoogleDrive/My Drive/Covid-19/mortality/ONSCovid/Covid_Registration.csv"), row.names=FALSE, sep=",")
+write.table(df, file=paste0("/Users/alessandralochen/Documents/covid-19 hospitalizations/ONS deaths/ONSCovid/Covid_Registration.csv"), row.names=FALSE, sep=",")
 
 
 ### Occurrences
 ##################
 ################### 
-data<-read_xlsx('publishedweek172020.xlsx',sheet='Covid-19 - Weekly occurrences' ,col_names = FALSE,range='A5:BC86')
+data<-read_xlsx(latestdata,sheet='Covid-19 - Weekly occurrences' ,col_names = FALSE,range='A5:BC86')
 ###################
 ###################
 data<-data[complete.cases(data[,3:8]),]
@@ -99,12 +99,12 @@ data[data==":"]<-NA
 data<-as.data.frame(t(data))
 data<-data[complete.cases(data),]
 
-write.table(data, file=paste0("/Volumes/GoogleDrive/My Drive/Covid-19/mortality/ONSCovid/Covid_Occurrences.csv"), row.names=FALSE, col.names=FALSE, sep=",")
+write.table(data, file=paste0("/Users/alessandralochen/Documents/covid-19 hospitalizations/ONS deaths/ONSCovid/Covid_Occurrences.csv"), row.names=FALSE, col.names=FALSE, sep=",")
 
 
 # The 2020 file needs to be cleaned up further
 
-data<-read.csv("/Volumes/GoogleDrive/My Drive/Covid-19/mortality/ONSCovid/Covid_Occurrences.csv",stringsAsFactors = FALSE)
+data<-read.csv("/Users/alessandralochen/Documents/covid-19 hospitalizations/ONS deaths/ONSCovid/Covid_Occurrences.csv",stringsAsFactors = FALSE)
 
 data<-data[1:(nrow(data)-1),]
 
@@ -134,6 +134,6 @@ df <- data %>% mutate(
 
 df<-df[,c(1:3,64:94)]
 
-write.table(df, file=paste0("/Volumes/GoogleDrive/My Drive/Covid-19/mortality/ONSCovid/Covid_Occurrences.csv"), row.names=FALSE, sep=",")
+write.table(df, file=paste0("/Users/alessandralochen/Documents/covid-19 hospitalizations/ONS deaths/ONSCovid/Covid_Occurrences.csv"), row.names=FALSE, sep=",")
 
 
