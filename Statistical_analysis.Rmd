@@ -1,0 +1,47 @@
+---
+title: "Statistical Analysis"
+fontsize: 11pt
+output: html_document
+geometry: margin=1in
+---
+```{r, echo=FALSE, warning=F, message=FALSE, include=FALSE}
+data<-read.csv("./Covid_Registration.csv",stringsAsFactors = FALSE)
+c.date <- format(max(as.Date(data$Week.ended, origin = "1899-12-30")),"%d/%m/%Y")
+```
+
+For the purpose of this study, we divide registered all-cause deaths into different categories ([Figure 1](figures.html)). Registered (or observed) all-cause deaths (red line) comprise of deaths that mention COVID-19 as cause of death (registered COVID-19 deaths), as well as those that mention another condition as cause of death (registered non-COVID-19 deaths). Expected deaths (dashed black line) are the number of deaths that we would have expected without the COVID-19 pandemic. Expected deaths are forecast with a time series model using data from the week ending on 8/1/2010 to the week ending on 28/2/2020. Because they are a statistical forecast, they are uncertain and surrounded by a prediction interval (grey shaded area). Excess all-cause deaths are given by the difference between registered and expected all-cause deaths allowing for the uncertainty in that expectation; excess non-COVID-19 deaths are given by subtracting registered COVID-19 deaths from the difference between observed all-cause deaths and expected all-cause deaths, also allowing for the uncertainty in that expectation. Excess deaths are uncertain, because their estimation relies on expected (forecasted) all-cause deaths. 
+
+Excess non-COVID-19 deaths may comprise of two broad types of deaths: underreported COVID-19 deaths, and indirect non-COVID-19 deaths; underreported COVID-19 deaths apply to individuals who died directly due to COVID-19 (i.e. COVID-19 was the main cause of death) but it was not reported on the death certificate, possibly because there was uncertainty or stigma surrounding the COVID-19 infection. Second, indirect non-COVID-19 deaths apply to individuals who did not die with COVID-19 as main cause of death, but they died indirectly due to the ongoing COVID-19 pandemic. This may have occurred because there was a disruption of healthcare provision and critically ill patients could not access care, or because patients avoided accessing healthcare. Both circumstances led to patients’ death, when they would have survived in the absence of the pandemic. 
+
+A reliable estimation of excess deaths (all-cause and non-COVID-19) relies on a reliable forecasting of expected deaths. We used a local linear trend model with trigonometric seasonality for the week ending on 8/1/2010 to the week ending on 28/2/2020 using weekly registered deaths in England and Wales from the ONS to forecast deaths from March to the most recent week ending on `r c.date`. This allowed us to capture the seasonality of the series as well as the growing population trends of older age groups over the past 10 years. The model was then used to forecast the number of expected deaths from the week ending on 06/03/2020 to the week ending on `r c.date`.
+
+A local linear trend model with trigonometric seasonality was fitted to the observed data, where the number of reported deaths per week is given by y~t~ and expressed in terms of a stochastic trend μ~t~, a seasonal component γ~t~ and a measurement error ε~t~:
+
+$$y_{t}=μ_{t}+γ_{t}+ε_{t}\\ε_{t}∼N(0,σ_ε^2)$$
+$$μ_{t+1}=μ_{t}+ν_{t}+ξ_{t}\\ξ_t∼N(0,σ_ξ^2)$$
+$$ν_{(t+1)}=ν_{t}+ζ_{t}\\ζ_{t}∼N(0,σ_{ζ}^2)$$
+$$γ_{t}=\sum_{j=1}^{[s/2]}γ_{jt}$$
+$$γ_{jt+1}=γ_{jt}cosλ_{j}+γ_{jt}^* sinλ_{j}+ω_{jt}$$
+$$γ_{jt=1}^*=-γ_{jt}sinλ_{j}+γ_{jt}^* cosλ_{j}+ω_{jt}^*$$
+$$λ_{j}=\frac{2πk}{s}$$
+
+where ε~t~, ξ~t~, ζ~t~, ω~jt~ and ω\*~jt~ are white noise errors which are mutually uncorrelated. The term μ~t~ allows the level of the trend to increase or decrease, and ν~t~ changes the slope of the trend. The parameters γ~jt~ and γ\*~jt=1~ capture the seasonality of the series [1]. Finally, the term s=52.18 is the period and is equal to the average number of weeks in a year accounting for a leap year every four. Since deaths are under-reported in the last week of each year and over-reported in the first week of the year after, the reported deaths for the two weeks are averaged. 
+
+The model was estimated for different sex, age groups and regions. To maintain compatibility with previous years, the age groups 0-14, 15-44, 45-64, 65-74, 75-84 and 85+ were used. For each group and week, we present figures with four series:
+
+  1. Registered (or observed) all-cause deaths (red line): registered non-COVID-19 plus registered COVID-19 deaths; 
+  2. Expected (forecast) all-cause deaths (black line with grey interval): The expected number of all-cause deaths forecasted for the week ending on 06/03/2020 to the week ending on `r c.date` with 95% prediction intervals;
+  3. Registered non-COVID-19 deaths (purple line)
+  4. Predicted all-cause deaths (blue line): the expected number of all-cause deaths predicted for the weeks ending 1/7/2019 to 28/2/2020 based on reported all-cause deaths for the weeks ending 8/1/2010 to 1/7/2019. 
+
+Excess deaths can be computed from the above series. Comparing reported with predicted deaths for the period July 2019 to February 2020 allows us to assess the accuracy of the model in forecasting all-cause deaths; a close match between reported and predicted deaths over the time period before the COVID pandemic instils confidence in the validity of the forecasted all-cause deaths for the period of interest March and April that we would have expected in the absence of the pandemic. 
+
+To assess the relative contribution of COVID-19 and excess deaths to all registered (observed) deaths during March and April, we calculate the percentage of expected (forecast) all-cause, registered COVID-19 and excess non-COVID-19 deaths on registered all-cause deaths, with prediction intervals around both expected deaths and excess non-COVID-19 deaths. We also calculate the proportion of registered to excess non-COVID-19 deaths. 
+
+For each series the model is estimated using the R package KFAS. The source code of the analysis is available on github.com/j-idea/ONSdeaths. Going forward, updated estimates will be provided weekly over the pandemic and while there are significant excess deaths. 
+
+
+Website updated on `r format(Sys.Date(), "%d/%m/%Y")`.
+
+Website by Daniel Anderson, Giovanni Forchini, Katharina Hauck, Alessadra Lochen
+
