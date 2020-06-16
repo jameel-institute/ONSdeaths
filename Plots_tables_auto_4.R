@@ -101,7 +101,7 @@ g_legend <- function(a.gplot){ # function for legend grob
 ExtractData<-function(i){
   data<-read.csv(paste0("./forecasts/",i),stringsAsFactors = F)
   data$Week.ended<-as.Date(data$Week.ended)
-  data <- data[data$Week.ended<=as.Date(max(cleandat$Week.ended)),] # until most recent date updated
+  data <- data[data$Week.ended<=as.Date(max(cleandat$Week.ended, na.rm = TRUE)),] # until most recent date updated
   data[,sub(".csv","",i)] <- cleandat[,sub(".csv", "",i)]
   
   data<-data[,c('Week.ended','fit','lwr','upr','signal',sub(".csv", "",i))]
@@ -151,8 +151,8 @@ pp<-function(i){
   
   
   ## Toggle for full forecast / March onwards ###################################################################
-  #data <- data[data$Week.ended>=as.Date("2020-03-01"),] # dates for March onwards; comment out for full forecast
-  data <- data[data$Week.ended>=as.Date("2019-07-01"),] # dates for full forecast; comment out for March onwards
+  data <- data[data$Week.ended>=as.Date("2020-03-01"),] # dates for March onwards; comment out for full forecast
+  #data <- data[data$Week.ended>=as.Date("2019-07-01"),] # dates for full forecast; comment out for March onwards
   ###############################################################################################################
   
   
@@ -163,10 +163,10 @@ pp<-function(i){
   
   
   ## Toggle for full forecast / March onwards ###################################################################
-  #mdf <- mdf[!(mdf$variable == "signal"),] # for March onwards; comment this line out for full forecast
-  mdf$variable <- factor(mdf$variable, levels=c("fit","var","var_covid", "signal"), # take out "signal" for March onwards
+  mdf <- mdf[!(mdf$variable == "signal"),] # for March onwards; comment this line out for full forecast
+  mdf$variable <- factor(mdf$variable, levels=c("fit","var","var_covid"), #, "signal" take out "signal" for March onwards
                          labels=c(paste("Expected 06/03-", format(max(mdf$Week.ended), "%d/%m"), sep = ""),
-                                  "Registered all-cause","Registered non-COVID deaths", "Predicted")) # take out "Predicted" for March onwards
+                                  "Registered all-cause","Registered non-COVID deaths")) #, "Predicted" take out "Predicted" for March onwards
   #################################################################################################################
   
   
@@ -176,8 +176,8 @@ pp<-function(i){
     geom_line() + 
     
     ## Toggle for full forecast / March onwards ##################################################################
-    #scale_x_date(breaks=unique(mdf$Week.ended),date_labels = "%d/%m") + # for March onwards; comment out for full forecast
-    scale_x_date(breaks=unique(mdf$Week.ended),date_labels = "%m/%y", date_breaks = "1 month") + # for full forecast; comment out for March onwards
+    scale_x_date(breaks=unique(mdf$Week.ended),date_labels = "%d/%m") + # for March onwards; comment out for full forecast
+    #scale_x_date(breaks=unique(mdf$Week.ended),date_labels = "%m/%y", date_breaks = "1 month") + # for full forecast; comment out for March onwards
     ##############################################################################################################
     
     theme_bw(base_size = 12, base_family = "Helvetica")+ theme_minimal() +
@@ -185,7 +185,7 @@ pp<-function(i){
     ggtitle(gsub("[.]"," ",sub(".csv", "",i)))+
     
     ## Toggle for full forecast / March onwards ##################################################################
-    scale_colour_manual(values = c("Black","Red", "Purple", "Blue")) + # take out "Blue" for March onwards
+    scale_colour_manual(values = c("Black","Red", "Purple")) + #, "Blue" take out "Blue" for March onwards
     ##############################################################################################################
   
     labs(colour = "Deaths", y ="Deaths", x = "")
@@ -203,7 +203,7 @@ grid.arrange(pp("England.csv") + theme(legend.position = "none"), pp("Wales.csv"
 dev.off()
 
 # Plot regions of England
-pdf("Regional_forecasts_England_fullforecast.pdf", width = 10, height = 7) #_MarOnwards.pdf
+pdf("Regional_forecasts_England_MarOnwards.pdf", width = 10, height = 7) #_fullforecast.pdf
 grid.arrange(
   pp("North.West.csv")+ylim(0, 3500)+theme(legend.position = "none"),
   pp("North.East.csv")+ylim(0, 3500)+theme(legend.position = "none"),
@@ -218,7 +218,7 @@ grid.arrange(
 dev.off()
 
 # Plot older age groups (all sexes) 
-pdf("Deaths_Allolder_MarOnwards.pdf", width = 7, height = 5) #_fullforecast.pdf
+pdf("Deaths_Allolder_MarOnwards.pdf", width = 8, height = 5) #_fullforecast.pdf
 grid.arrange(pp("All.45.64.csv")+theme(legend.position = "none")+ggtitle("All 45-64 yrs"),
              pp("All.65.74.csv")+theme(legend.position = "none")+ggtitle("All 65-74 yrs"),
              pp("All.75.84.csv")+theme(legend.position = "none")+ggtitle("All 75-84 yrs"),
@@ -227,35 +227,35 @@ grid.arrange(pp("All.45.64.csv")+theme(legend.position = "none")+ggtitle("All 45
 dev.off()
 
 # Plot older age groups with full forecast/March onwards
-pdf("Deaths_AllolderAllsex_fullforecast.pdf", width = 10, height = 7) #_MarOnwards.pdf
+pdf("Deaths_AllolderAllsex_MarOnwards.pdf", width = 15, height = 5) #_fullforecast.pdf
 grid.arrange(
   ## Full forecast order of plots with pdf dimensions width = 10, height = 7
-  pp("All.85..csv")+theme(legend.position = "none")+ggtitle("All 85+ yrs"),
-  pp("Female.85..csv")+theme(legend.position = "none")+ggtitle("Female 85+ yrs"),
-  pp("Male.85..csv")+theme(legend.position = "none")+ggtitle("Male 85+ yrs"),
-  pp("All.75.84.csv")+theme(legend.position = "none")+ggtitle("All 75-84 yrs"),
-  pp("Female.75.84.csv")+theme(legend.position = "none")+ggtitle("Female 75-84 yrs"),
-  pp("Male.75.84.csv")+theme(legend.position = "none")+ggtitle("Male 75-84 yrs"),
-  pp("All.65.74.csv")+theme(legend.position = "none")+ggtitle("All 65-74 yrs"),
-  pp("Female.65.74.csv")+theme(legend.position = "none")+ggtitle("Female 65-74 yrs"),
-  pp("Male.65.74.csv")+theme(legend.position = "none")+ggtitle("Male 65-74 yrs"),
-  pp("All.45.64.csv")+theme(legend.position = "none")+ggtitle("All 45-64 yrs"),
-  pp("Female.45.64.csv")+theme(legend.position = "none")+ggtitle("Female 45-64 yrs"),
-  pp("Male.45.64.csv")+theme(legend.position = "none")+ggtitle("Male 45-64 yrs"),
-  bottom = legendgrob, ncol = 3)
+  # pp("All.85..csv")+theme(legend.position = "none")+ggtitle("All 85+ yrs"),
+  # pp("Female.85..csv")+theme(legend.position = "none")+ggtitle("Female 85+ yrs"),
+  # pp("Male.85..csv")+theme(legend.position = "none")+ggtitle("Male 85+ yrs"),
+  # pp("All.75.84.csv")+theme(legend.position = "none")+ggtitle("All 75-84 yrs"),
+  # pp("Female.75.84.csv")+theme(legend.position = "none")+ggtitle("Female 75-84 yrs"),
+  # pp("Male.75.84.csv")+theme(legend.position = "none")+ggtitle("Male 75-84 yrs"),
+  # pp("All.65.74.csv")+theme(legend.position = "none")+ggtitle("All 65-74 yrs"),
+  # pp("Female.65.74.csv")+theme(legend.position = "none")+ggtitle("Female 65-74 yrs"),
+  # pp("Male.65.74.csv")+theme(legend.position = "none")+ggtitle("Male 65-74 yrs"),
+  # pp("All.45.64.csv")+theme(legend.position = "none")+ggtitle("All 45-64 yrs"),
+  # pp("Female.45.64.csv")+theme(legend.position = "none")+ggtitle("Female 45-64 yrs"),
+  # pp("Male.45.64.csv")+theme(legend.position = "none")+ggtitle("Male 45-64 yrs"),
+  # bottom = legendgrob, ncol = 3)
 
   ## March onwards order of plots with pdf dimensions width = 13, height = 5
-  # pp("Female.85..csv")+theme(legend.position = "none")+ggtitle("Female 85+ yrs"),
-  # pp("Female.75.84.csv")+theme(legend.position = "none")+ggtitle("Female 75-84 yrs"),
-  # pp("Female.65.74.csv")+theme(legend.position = "none")+ggtitle("Female 65-74 yrs"),
-  # pp("Female.45.64.csv")+theme(legend.position = "none")+ggtitle("Female 45-64 yrs"),
-  # pp("Female.15.44.csv")+theme(legend.position = "none")+ggtitle("Female 15-44 yrs"),
-  # pp("Male.85..csv")+theme(legend.position = "none")+ggtitle("Male 85+ yrs"),
-  # pp("Male.75.84.csv")+theme(legend.position = "none")+ggtitle("Male 75-84 yrs"),
-  # pp("Male.65.74.csv")+theme(legend.position = "none")+ggtitle("Male 65-74 yrs"),
-  # pp("Male.45.64.csv")+theme(legend.position = "none")+ggtitle("Male 45-64 yrs"),
-  # pp("Male.15.44.csv")+theme(legend.position = "none")+ggtitle("Male 15-44 yrs"),
-  # bottom = legendgrob, ncol=5)
+  pp("Female.85..csv")+theme(legend.position = "none")+ggtitle("Female 85+ yrs"),
+  pp("Female.75.84.csv")+theme(legend.position = "none")+ggtitle("Female 75-84 yrs"),
+  pp("Female.65.74.csv")+theme(legend.position = "none")+ggtitle("Female 65-74 yrs"),
+  pp("Female.45.64.csv")+theme(legend.position = "none")+ggtitle("Female 45-64 yrs"),
+  pp("Female.15.44.csv")+theme(legend.position = "none")+ggtitle("Female 15-44 yrs"),
+  pp("Male.85..csv")+theme(legend.position = "none")+ggtitle("Male 85+ yrs"),
+  pp("Male.75.84.csv")+theme(legend.position = "none")+ggtitle("Male 75-84 yrs"),
+  pp("Male.65.74.csv")+theme(legend.position = "none")+ggtitle("Male 65-74 yrs"),
+  pp("Male.45.64.csv")+theme(legend.position = "none")+ggtitle("Male 45-64 yrs"),
+  pp("Male.15.44.csv")+theme(legend.position = "none")+ggtitle("Male 15-44 yrs"),
+  bottom = legendgrob, ncol=5)
 dev.off()
 
 # Plot younger age groups all sexes (full forecast only)
@@ -381,7 +381,7 @@ latestcumulative_regional <- latest_cumulative %>% select('region', 'deaths', 'e
 colnames(latestcumulative_regional) <- c("Geographic unit", "Reported all-cause deaths", "Expected (%)", "Expected 95% confidence interval (%)", "COVID-19 (%)",
                             "Excess non-COVID-19 (%)", "Excess non-COVID-19 95% confidence interval (%)")
 latestcumulative_regional <- latestcumulative_regional[match(c("England", "North West", "North East", "Yorkshire and The Humber", "West Midlands", "East Midlands", "East", 
-                                  "South West", "London", "South East", "Wales"),latestcumulative_regional$Region),]
+                                  "South West", "London", "South East", "Wales"),latestcumulative_regional$`Geographic unit`),]
 write.csv(latestcumulative_regional, "Table1_cumulativeregional.csv")
 
 
@@ -459,7 +459,7 @@ weeklyEngfull$alldeaths <- format(weeklyEngfull$alldeaths, big.mark=",", trim = 
 weeklyEngfull$exptd <- paste(format(round(weeklyEngfull$exptd), big.mark=",", trim = TRUE), " (", 
                      format(round(weeklyEngfull$per.expted, digits = 1), big.mark=",", trim = TRUE), "%)", 
                      sep = "")
-weeklyEngfull$exptd_bounds <- paste(format(round(weeklyEngfull$exptd.lwr), big.mark=",", trim = TRUE), " -", 
+weeklyEngfull$exptd_bounds <- paste(format(round(weeklyEngfull$exptd.lwr), big.mark=",", trim = TRUE), " - ", 
                             format(round(weeklyEngfull$exptd.upr), big.mark=",", trim = TRUE), " (", 
                             round(weeklyEngfull$per.expted.lwr, digits = 1),"% - ", 
                             round(weeklyEngfull$per.expted.upr, digits = 1), "%)", sep = "")
