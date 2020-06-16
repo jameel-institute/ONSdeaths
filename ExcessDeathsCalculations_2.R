@@ -89,7 +89,7 @@ weekly.forecasts<-function(data,var){
   df[df$Week.ended < end1,c('signal',var)]<-Train[Train$Week.ended < end1,c('predicted',var)]
   #df[df$Week.ended < end1,var]<-Train[,var]
   
-  print("Weekly: forecasting")
+  print("Weeekly: forecasting")
   n<-nrow(df[df$Week.ended >= end1,])
   
   newdata<-SSModel(rep(NA,n)~SSMseasonal(period = 52.18, sea.type = "trigonometric")+
