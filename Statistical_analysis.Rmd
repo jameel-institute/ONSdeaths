@@ -38,7 +38,7 @@ Excess deaths can be computed from the above series. Comparing reported with pre
 
 To assess the relative contribution of COVID-19 and excess deaths to all registered (observed) deaths during March and April, we calculate the percentage of expected (forecast) all-cause, registered COVID-19 and excess non-COVID-19 deaths on registered all-cause deaths, with prediction intervals around both expected deaths and excess non-COVID-19 deaths. We also calculate the proportion of registered to excess non-COVID-19 deaths. 
 
-For each series the model is estimated using the R package KFAS. The source code of the analysis is available on github.com/j-idea/ONSdeaths. Going forward, updated estimates will be provided weekly over the pandemic and while there are significant excess deaths. 
+For each series the model is estimated using the R package KFAS. The source code of the analysis is available on [github.com/j-idea/ONSdeaths](www.github.com/j-idea/ONSdeaths). Going forward, updated estimates will be provided weekly over the pandemic and while there are significant excess deaths. 
 
 
 Website updated on `r format(Sys.Date(), "%d/%m/%Y")`.

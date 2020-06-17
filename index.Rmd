@@ -314,17 +314,20 @@ extract_cumulative_row <- function(dataframe){
 
 string_condition_recent <- function(row, other_deaths, time){
   if ((other_deaths - as.numeric(row[,5]) > 0) & (other_deaths - as.numeric(row[,7]) > 0) & !(other_deaths - as.numeric(row[,6]) < 0)){
-    string = sprintf('We would have expected %s – %s all-cause deaths for that %s. This implies that total excess deaths were between %s – %s , and comprised of %s – %s non-COVID-19 excess deaths', 
+    string = sprintf('We would have expected %s (95%% CI %s – %s) all-cause deaths for that %s. This implies that total excess deaths were between %s – %s, and comprised of %s (95%% CI %s – %s) non-COVID-19 excess deaths.', 
+                     as.character(round(row[,5])),
                      as.character(round(row[,7])),  
                      as.character(round(row[,6])),
                      time,
                      as.character(round(as.numeric(row[,3]) - as.numeric(row[,6]))),  
                      as.character(round(as.numeric(row[,3]) - as.numeric(row[,7]))), 
+                     as.character(round(other_deaths - as.numeric(row[,5]))),
                      as.character(round(other_deaths - as.numeric(row[,6]))), 
                      as.character(round(other_deaths - as.numeric(row[,7]))))
     }
   else if ((other_deaths - as.numeric(row[,5]) > 0) & ( other_deaths - as.numeric(row[,7]) >= 0) & (other_deaths - as.numeric(row[,6]) <= 0)){
-    string = sprintf('We would have expected %s – %s all-cause deaths for that %s. This implies that total excess deaths were between %s – %s, and excess non-COVID-19 deaths were not significantly different than the expected deaths',
+    string = sprintf('We would have expected %s (95%% CI %s – %s) all-cause deaths for that %s. This implies that total excess deaths were between %s – %s, and excess non-COVID-19 deaths were not significantly different than the expected deaths.',
+                     as.character(round(row[,5])),
                      as.character(round(row[,7])),  
                      as.character(round(row[,6])),  
                      time,
@@ -332,10 +335,12 @@ string_condition_recent <- function(row, other_deaths, time){
                      as.character(round(as.numeric(row[,3]) - as.numeric(row[,7]))))
     }
   else if ((other_deaths - as.numeric(row[,5]) < 0) & (other_deaths - as.numeric(row[,7]) > 0) & !(other_deaths - as.numeric(row[,6]) < 0)){
-    string = sprintf('There was a deficit of excess non-COVID-19 deaths in this %s ranging between %s – %s, which means that non-COVID-19 deaths were significantly lower than the %s – %s expected deaths for this %s',
+    string = sprintf('There was a deficit of excess non-COVID-19 deaths in this %s of %s (95%% CI %s – %s), which means that non-COVID-19 deaths were significantly lower than the %s (95%% CI %s – %s) expected deaths for this %s.',
                     time,
+                    as.character(round(other_deaths - as.numeric(row[,5]))),
                     as.character(round(other_deaths - as.numeric(row[,6]))),
                     as.character(round(other_deaths - as.numeric(row[,7]))),
+                    as.character(round(row[,5])),
                     as.character(round(as.numeric(row[,7]))),
                     as.character(round(as.numeric(row[,6]))),
                     time)
@@ -358,7 +363,7 @@ Correspondence: [Katharina Hauck](mailto:k.hauck@imperial.ac.uk), [Neil Ferguson
 
 This website provides weekly updates of deaths in England and Wales using publicly available data on the provisional number of deaths registered in the past week from the Office of National Statistics ([see Data](Data.html)). We show the number of registered all-cause deaths, and the deaths registered as COVID-19 deaths as provided by the ONS for every week beginning in March 2020. We compare the all-cause deaths with the number of deaths we would have expected to see being registered in this week had there been no pandemic, based on numbers of deaths in corresponding weeks of previous years, and determine the number of excess deaths as the difference. We then compare the excess deaths with the recorded COVID-19 deaths, which gives an estimate of excess deaths that were not associated with COVID-19 according to official registers. These estimates of excess non-COVID-19 deaths inform whether the pandemic led to unexpected deaths that were higher (or lower) than what we would have expected in that week ([Figure 1](figures.html)). It is possible that all or almost all excess deaths comprise of registered COVID-19 deaths, in that situation there are no excess non-COVID-19 deaths ([Figure 2](figures.html)). It is also possible that excess non-COVID-19 deaths are actually lower than expected deaths, once registered COVID-19 deaths are subtracted from excess deaths ([Figure 3](figures.html)). We also present total cumulative deaths across all categories. This is the sum of registered all-cause deaths, COVID-19 deaths, expected deaths and excess non-COVID-19 deaths from the week ending 6 March 2020 to `r s.date`. 
  
-It is not straightforward to estimate expected deaths, because the number of deaths in the absence of the pandemic is inherently unobservable. We forecast the expected number of deaths in each week from March 2020 onwards using time series methods and data on deaths going back to 2010. We consider the uncertainty around our estimates using prediction intervals. For further details, see the [Methods section](Statistical_analysis.html).
+It is not straightforward to estimate expected deaths, because the number of deaths in the absence of the pandemic is inherently unobservable. We forecast the expected number of deaths in each week from March 2020 onwards using time series methods and data on deaths going back to 2010. We consider the uncertainty around our estimates using confidence intervals. For further details, see the [Methods section](Statistical_analysis.html).
 
 \
 
@@ -389,11 +394,13 @@ The pandemic is ongoing, and we only estimate excess deaths until the week endin
 
 ### England: Deaths from week ending 06/03/2020 to week ending `r c.date` ![](./England_update.png) 
 
+\
+
 ```{r, echo=F, warnings = F, message=FALSE, fig.align = 'center'}
 p.england<-producePlot("England")+theme(plot.title=element_text(size=12),axis.text=element_text(size=12))
 
 png(filename = "England_update.png",
-     width = 7, height = 5, units = "in", res = 300)
+     width = 9, height = 6, units = "in", res = 300)
 grid.arrange(p.england + theme(legend.position = "none"),
              ncol=1,
              bottom=g_legend(p.england + theme(legend.position="bottom",legend.text=element_text(size=10))))
@@ -411,19 +418,21 @@ England_cumulative_other <- England_cumulative_all_cause - England_cumulative_co
 cumulative_England_latest <- extract_cumulative_row(cumulative_England)
 ```
 
-In the week ending `r s.date`, there were `r as.character(England_all_cause)` registered all-cause deaths in England. These comprise of `r as.character(England_covid)` deaths registered due to COVID-19 and `r as.character(England_other)` deaths registered due to other conditions. `r string_condition_recent(current_England, England_other, 'week')`.
+In the week ending `r s.date`, there were `r as.character(England_all_cause)` registered all-cause deaths in England. These comprise of `r as.character(England_covid)` deaths registered due to COVID-19 and `r as.character(England_other)` deaths registered due to other conditions. `r string_condition_recent(current_England, England_other, 'week')`
 
-Over the weeks ending 6 March 2020 to `r s.date`, there were `r as.character(England_cumulative_all_cause)` cumulative registered all-cause deaths in England. These comprise of `r as.character(England_cumulative_covid)` deaths due to COVID-19 and `r as.character(England_cumulative_other)` deaths due to other conditions. `r string_condition_recent(cumulative_England_latest, England_cumulative_other, 'period')`.
+Over the weeks ending 6 March 2020 to `r s.date`, there were `r as.character(England_cumulative_all_cause)` cumulative registered all-cause deaths in England. These comprise of `r as.character(England_cumulative_covid)` deaths due to COVID-19 and `r as.character(England_cumulative_other)` deaths due to other conditions. `r string_condition_recent(cumulative_England_latest, England_cumulative_other, 'period')`
 
 \
 
 ### Wales: Deaths from week ending 06/03/2020 to week ending `r c.date`
 
+\
+
 ```{r, echo=F, warnings = F, message=FALSE, fig.align = 'center'}
 p.wales<-producePlot("Wales")+theme(plot.title=element_text(size=12),axis.text=element_text(size=12))
 
 png(filename = "Wales_update.png",
-     width = 7, height = 5, units = "in", res = 300)
+     width = 9, height = 6, units = "in", res = 300)
 grid.arrange(p.wales + theme(legend.position = "none"),
              ncol=1,
              bottom=g_legend(p.england + theme(legend.position="bottom",legend.text=element_text(size=10))))
@@ -443,16 +452,19 @@ cumulative_Wales_latest <- extract_cumulative_row(cumulative_Wales)
 ![](./Wales_update.png)
 
 
-In the week ending `r s.date`, there were `r as.character(Wales_all_cause)` registered all-cause deaths in Wales. These comprise of `r as.character(Wales_covid)` deaths due to COVID-19 and `r as.character(Wales_other)` deaths due to other conditions. `r string_condition_recent(current_Wales, Wales_other, 'week')`.
+In the week ending `r s.date`, there were `r as.character(Wales_all_cause)` registered all-cause deaths in Wales. These comprise of `r as.character(Wales_covid)` deaths due to COVID-19 and `r as.character(Wales_other)` deaths due to other conditions. `r string_condition_recent(current_Wales, Wales_other, 'week')`
 
-Over the weeks ending 6 March 2020 to `r s.date`, there were `r as.character(Wales_cumulative_all_cause)` cumulative registered all-cause deaths in Wales. These comprise of `r as.character(Wales_cumulative_covid)` deaths due to COVID-19 and `r as.character(Wales_cumulative_other)` deaths due to other conditions. `r string_condition_recent(cumulative_Wales_latest, Wales_cumulative_other, 'period')`.
+Over the weeks ending 6 March 2020 to `r s.date`, there were `r as.character(Wales_cumulative_all_cause)` cumulative registered all-cause deaths in Wales. These comprise of `r as.character(Wales_cumulative_covid)` deaths due to COVID-19 and `r as.character(Wales_cumulative_other)` deaths due to other conditions. `r string_condition_recent(cumulative_Wales_latest, Wales_cumulative_other, 'period')`
 
 \
 
+
 ### Deaths from week ending 06/03/2020 to week ending `r c.date`, English regions
 
+\
+
 ```{r, echo=F, warning=F, fig.height=12, fig.width = 12}
-q<-theme(plot.title=element_text(size=18),axis.text=element_text(size=12),axis.title=element_text(size=16))
+q<-theme(plot.title=element_text(size=16),axis.text=element_text(size=12),axis.title=element_text(size=14))
 
 NorthWest<-producePlot("North.West")+q
 
@@ -472,7 +484,7 @@ London<-producePlot("London")+q
 
 SouthEast<-producePlot("South.East")+q
 
-png(filename = "EnglandRegions_update.png", width = 10, height = 7.5, units = "in", res = 300)
+png(filename = "EnglandRegions_update.png", width = 12, height = 9, units = "in", res = 300)
 grid.arrange(NorthWest+ theme(legend.position = "none")+ggtitle("North West")+ylim(0, 3500),
              
              NorthEast+ theme(legend.position = "none")+ggtitle("North East")+ylim(0, 3500),
@@ -499,6 +511,8 @@ grid.arrange(NorthWest+ theme(legend.position = "none")+ggtitle("North West")+yl
 
 ### Table: Cumulative deaths from week ending 06/03/2020 to week ending `r c.date`, English regions
 
+\
+
 ```{r, echo=F,  warning=FALSE, message=FALSE, results = 'asis' }
 Regional_temp <- rbind(extract.cumulative("Yorkshire.and.The.Humber"),
                        extract.cumulative("North.East"),
@@ -522,7 +536,7 @@ Regional_temp <- Regional_temp %>% dplyr::rename(lwr=`2.5%`,upr=`97.5%`)
 
 Regional_temp<-Regional_temp %>% mutate(excess.Deaths.upr=Deaths-Covid-lwr, 
                                         excess.Deaths.lwr=Deaths-Covid-upr, 
-                                        excess.Deaths.expected=Deaths-Covid-fit) # this temp used for coefficient/multiplier (see below)
+                                        excess.Deaths.expected=Deaths-Covid-fit)
 
 temp3<-Regional_temp %>% group_by(region) %>% summarise(
   allDeaths = Deaths,  
@@ -567,18 +581,20 @@ temp3 <- rbind(temp3, EW)
 
 
 regional_tab <- temp3 %>% select(region, allDeaths, exptd, exptd_bounds, Covid.num, exces.nCovid, exces_bounds)
-colnames(regional_tab) <- c("Geographical unit", "Reported all-cause Deaths", "Expected (%)", "Expected 95% confidence interval (%)", "Covid (%)",
-                            "Excess non-Covid (%)", "Excess non-Covid 95% confidence interval (%)")
+colnames(regional_tab) <- c("Geographical unit", "Reported all-cause deaths", "Expected (%)", "Expected 95% confidence interval (%)", "COVID-19 (%)",
+                            "Excess non-COVID-19 (%)", "Excess non-COVID-19 95% confidence interval (%)")
 order<-c("England","North West","North East","Yorkshire and The Humber","West Midlands","East Midlands","East",
          "South West", "London","South East","Wales")
 
 kable(regional_tab[match(order,regional_tab$`Geographical unit`),])%>%
   kable_styling(bootstrap_options = c("striped","condensed"),full_width = F, position = "left")
 ```
+
 \
 
 ### Deaths from week ending 06/03/2020 to week ending `r c.date`, by gender and older ages, England and Wales
 
+\
 
 ```{r, echo=F, fig.height=12, fig.width=12}
 
@@ -603,7 +619,7 @@ p.F.45.64<-producePlot("Female.75.84")+q
 p.M.45.64<-producePlot("Male.75.84")+q
 
 png(filename = "Olderage_update.png",
-     width = 15, height = 12, units = "in", res = 300)
+     width = 12, height = 9, units = "in", res = 300)
 grid.arrange(p.all.85 + theme(legend.position = "none")+ggtitle("All 85+ yrs"), 
              p.F.85 + theme(legend.position = "none")+ggtitle("Female 85+ yrs"), 
              p.M.85 + theme(legend.position = "none")+ggtitle("Male 85+ yrs"), 
@@ -623,7 +639,92 @@ grid.arrange(p.all.85 + theme(legend.position = "none")+ggtitle("All 85+ yrs"),
 
 \
 
+### Table: Cumulative deaths from week ending 06/03/2020 to week ending `r c.date`, older age groups
+
+\
+
+```{r, echo=F,  warning=FALSE, message=FALSE, results = 'asis' }
+Agegrp_temp <- rbind(extract.cumulative("All.85."),
+                       extract.cumulative("Female.85."),
+                       extract.cumulative("Male.85."),
+                       extract.cumulative("All.75.84"),
+                       extract.cumulative("Female.75.84"),
+                       extract.cumulative("Male.75.84"),
+                       extract.cumulative("All.65.74"),
+                       extract.cumulative("Female.65.74"),
+                       extract.cumulative("Male.65.74"),
+                       extract.cumulative("All.45.64"),
+                       extract.cumulative("Female.45.64"),
+                       extract.cumulative("Male.45.64"))
+
+Agegrp_temp<-Agegrp_temp[Agegrp_temp$Week.ended==as.Date(c.date,"%d/%m/%y"),]
+
+Agegrp_temp$Week.ended<-NULL
+Agegrp_temp$`50%`<-NULL
+Agegrp_temp <- Agegrp_temp %>% dplyr::rename(lwr=`2.5%`,upr=`97.5%`)
+
+Agegrp_temp<-Agegrp_temp %>% mutate(excess.Deaths.upr=Deaths-Covid-lwr, 
+                                        excess.Deaths.lwr=Deaths-Covid-upr, 
+                                        excess.Deaths.expected=Deaths-Covid-fit)
+
+temp4<-Agegrp_temp %>% group_by(region) %>% summarise(
+  allDeaths = Deaths,  
+  exptd = fit, 
+  per.expted=100*fit/Deaths,
+  exptd.upr = upr,
+  per.expted.upr=100*upr/Deaths,
+  exptd.lwr = lwr,
+  per.expted.lwr=100*lwr/Deaths,
+  Covid.num = Covid,
+  per.Covid=100*Covid/Deaths,
+  exces.nCovid = Deaths-Covid-fit,
+  per.exces.nCovid=100*(Deaths-Covid-fit)/Deaths,
+  exces.nCovid.lwr = Deaths-Covid-upr,
+  per.exces.nCovid.lwr=100*(Deaths-Covid-upr)/Deaths,
+  exces.nCovid.upr = Deaths-Covid-lwr,
+  per.exces.nCovid.upr=100*(Deaths-Covid-lwr)/Deaths)
+
+temp4$allDeaths <- format(temp4$allDeaths, big.mark=",")
+
+temp4$exptd <- paste0(format(round(temp4$exptd), big.mark=","), "\n(", 
+                      format(round(temp4$per.expted, digits = 1), big.mark=","), "%)", 
+                      sep = "")
+temp4$exptd_bounds <- paste0(format(round(temp4$exptd.lwr), big.mark=","), " -", 
+                             format(round(temp4$exptd.upr), big.mark=","), "\n(", 
+                             round(temp4$per.expted.lwr, digits = 1),"% - ", 
+                             round(temp4$per.expted.upr, digits = 1), "%)", sep = "")
+
+temp4$exces.nCovid <- paste0(format(round(temp4$exces.nCovid), big.mark=","), "\n(", 
+                             round(temp4$per.exces.nCovid, digits = 1), "%)", sep = "")
+temp4$exces_bounds <- paste0(format(round(temp4$exces.nCovid.lwr), big.mark=","), " - ", 
+                             format(round(temp4$exces.nCovid.upr), big.mark=","), "\n(", 
+                             round(temp4$per.exces.nCovid.lwr, digits = 1),"% - ", 
+                             round(temp4$per.exces.nCovid.upr, digits = 1), "%)", sep = "")
+
+temp4$Covid.num <- paste0(format(round(temp4$Covid.num), big.mark=","), "\n(", 
+                          round(temp4$per.Covid, digits = 1), "%)", sep = "")
+temp4$region <- gsub("[.]"," ",temp4$region)
+temp4$region <- gsub("All", "All:", temp4$region)
+temp4$region <- gsub("Female", "Female:", temp4$region)
+temp4$region <- gsub("Male", "Male:", temp4$region)
+temp4$region <- gsub("45 64", "45-64", temp4$region)
+temp4$region <- gsub("65 74", "65-74", temp4$region)
+temp4$region <- gsub("75 84", "75-84", temp4$region)
+temp4$region <- gsub("85 ", "85+", temp4$region)
+
+agegrp_tab <- temp4 %>% select(region, allDeaths, exptd, exptd_bounds, Covid.num, exces.nCovid, exces_bounds)
+colnames(agegrp_tab) <- c("Sex and age group (years)", "Reported all-cause deaths", "Expected (%)", "Expected 95% confidence interval (%)", "COVID-19 (%)",
+                            "Excess non-COVID-19 (%)", "Excess non-COVID-19 95% confidence interval (%)")
+
+
+kable(agegrp_tab) %>%
+  kable_styling(bootstrap_options = c("striped","condensed"),full_width = F, position = "left")
+```
+\
+
 ### Deaths from week ending 06/03/2020 to week ending `r c.date`, by gender and younger ages, England and Wales
+
+\
 
 ```{r, echo=F, fig.height=9, fig.width=12}
 
