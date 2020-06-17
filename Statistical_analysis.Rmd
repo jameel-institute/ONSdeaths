@@ -43,5 +43,5 @@ For each series the model is estimated using the R package KFAS. The source code
 
 Website updated on `r format(Sys.Date(), "%d/%m/%Y")`.
 
-Website by Daniel Anderson, Giovanni Forchini, Katharina Hauck, Alessadra Lochen
+Website by Daniel Anderson, Giovanni Forchini, Katharina Hauck, Alessandra Lochen
 

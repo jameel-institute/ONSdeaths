@@ -50,7 +50,7 @@ extract.week<-function(var){
   
   covid<-read.csv("./Covid_Registration.csv")
   covid$Week.ended<-as.Date(covid$Week.ended, origin = "1899-12-30")
-  covid<-rename(covid, Total.deaths.all.ages = Total.COVID.19.deaths.all.ages)
+  covid<-dplyr::rename(covid, Total.deaths.all.ages = Total.COVID.19.deaths.all.ages)
   data$respiratory<-NULL
   covid$England<-rowSums(covid[,c("North.East","North.West","Yorkshire.and.The.Humber","East.Midlands",
                                   "West.Midlands", "East","London","South.East",
@@ -58,7 +58,7 @@ extract.week<-function(var){
   temp<-covid[,c("Week.ended",var),]
   colnames(temp)<-c("Week.ended","Covid")
   forecasts.week<-merge(temp,  forecasts.week, by='Week.ended',all.y=T)
-  forecasts.week <- rename(forecasts.week, Deaths = var)
+  forecasts.week <- dplyr::rename(forecasts.week, Deaths = var)
   forecasts.week$region<-var
   return(forecasts.week)
 }
@@ -94,7 +94,7 @@ extract.cumulative<-function(var){
   
   covid<-read.csv("./Covid_Registration.csv")
   covid$Week.ended<-as.Date(covid$Week.ended, origin = "1899-12-30")
-  covid<-rename(covid, Total.deaths..all.ages = Deaths.involving.COVID.19..all.ages1)
+  covid<-dplyr::rename(covid, Total.deaths..all.ages = Deaths.involving.COVID.19..all.ages1)
   data$respiratory<-NULL
   covid$England<-rowSums(covid[,c("North.East","North.West","Yorkshire.and.The.Humber","East.Midlands",
                                   "West.Midlands", "East","London","South.East",
@@ -105,7 +105,7 @@ extract.cumulative<-function(var){
   temp$Covid<-cumsum(temp$Covid)
   temp$Week.ended<-as.Date(temp$Week.ended)
   forecasts.c<-merge(temp,  forecasts.c, by='Week.ended',all.y=T)
-  forecasts.c <- rename(forecasts.c, Deaths = var)
+  forecasts.c <- dplyr::rename(forecasts.c, Deaths = var)
   forecasts.c$region<-var
   return(forecasts.c)
 }
@@ -358,7 +358,7 @@ Correspondence: [Katharina Hauck](mailto:k.hauck@imperial.ac.uk), [Neil Ferguson
 
 This website provides weekly updates of deaths in England and Wales using publicly available data on the provisional number of deaths registered in the past week from the Office of National Statistics ([see Data](Data.html)). We show the number of registered all-cause deaths, and the deaths registered as COVID-19 deaths as provided by the ONS for every week beginning in March 2020. We compare the all-cause deaths with the number of deaths we would have expected to see being registered in this week had there been no pandemic, based on numbers of deaths in corresponding weeks of previous years, and determine the number of excess deaths as the difference. We then compare the excess deaths with the recorded COVID-19 deaths, which gives an estimate of excess deaths that were not associated with COVID-19 according to official registers. These estimates of excess non-COVID-19 deaths inform whether the pandemic led to unexpected deaths that were higher (or lower) than what we would have expected in that week ([Figure 1](figures.html)). It is possible that all or almost all excess deaths comprise of registered COVID-19 deaths, in that situation there are no excess non-COVID-19 deaths ([Figure 2](figures.html)). It is also possible that excess non-COVID-19 deaths are actually lower than expected deaths, once registered COVID-19 deaths are subtracted from excess deaths ([Figure 3](figures.html)). We also present total cumulative deaths across all categories. This is the sum of registered all-cause deaths, COVID-19 deaths, expected deaths and excess non-COVID-19 deaths from the week ending 6 March 2020 to `r s.date`. 
  
-It is not straightforward to estimate expected deaths, because the number of deaths in the absence of the pandemic is inherently unobservable. We forecast the expected number of deaths in each week from March 2020 onwards using time series methods and data on deaths going back to 2010. We consider the uncertainty around our estimates using prediction intervals. For further details, see the [methods section](Statistical_analysis.html).
+It is not straightforward to estimate expected deaths, because the number of deaths in the absence of the pandemic is inherently unobservable. We forecast the expected number of deaths in each week from March 2020 onwards using time series methods and data on deaths going back to 2010. We consider the uncertainty around our estimates using prediction intervals. For further details, see the [Methods section](Statistical_analysis.html).
 
 \
 
@@ -378,7 +378,7 @@ Variations in deaths: The figures show steep increases and declines for COVID-19
 
 \
 
-The pandemic is ongoing, and we only estimate excess deaths until the week ending in `r s.date`. It is possible that the pandemic will impact on deaths in months and even years to come, including due to delays in cancer treatment resulting in treatable cancer becoming untreatable and causing death occurring months or years later. There is inherent uncertainty in forecasting deaths. We find that our model reliably predicts reported deaths in the pre-pandemic period between July 2019 and February 2020 based on data going back to 2010 [link to report]. However, there is no guarantee that a model that fits the pre-pandemic time period is forecasting well for the pandemic period that saw unprecedented changes in hospital care provision, patient behaviour, and many other factors including possibly the reporting of deaths itself. The uncertainty around our forecasts may take account of some but not all of this uncertainty. Moreover, we cannot take account of irregularities in the reporting of COVID-19 and non-COVID-19 deaths. For further limitations see [report]
+The pandemic is ongoing, and we only estimate excess deaths until the week ending in `r s.date`. It is possible that the pandemic will impact on deaths in months and even years to come, including due to delays in cancer treatment resulting in treatable cancer becoming untreatable and causing death occurring months or years later. There is inherent uncertainty in forecasting deaths. We find that our model reliably predicts reported deaths in the pre-pandemic period between July 2019 and February 2020 based on data going back to 2010 ([Report 28](https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-17-COVID19-Report-28.pdf)). However, there is no guarantee that a model that fits the pre-pandemic time period is forecasting well for the pandemic period that saw unprecedented changes in hospital care provision, patient behaviour, and many other factors including possibly the reporting of deaths itself. The uncertainty around our forecasts may take account of some but not all of this uncertainty. Moreover, we cannot take account of irregularities in the reporting of COVID-19 and non-COVID-19 deaths. For further limitations see ([Report 28](https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-17-COVID19-Report-28.pdf)).
 
 \
 
@@ -512,7 +512,7 @@ Regional_temp<-Regional_temp[Regional_temp$Week.ended==as.Date(c.date,"%d/%m/%y"
 
 Regional_temp$Week.ended<-NULL
 Regional_temp$`50%`<-NULL
-Regional_temp <- Regional_temp %>% rename(lwr=`2.5%`,upr=`97.5%`)
+Regional_temp <- Regional_temp %>% dplyr::rename(lwr=`2.5%`,upr=`97.5%`)
 
 Regional_temp<-Regional_temp %>% mutate(excess.Deaths.upr=Deaths-Covid-lwr, 
                                         excess.Deaths.lwr=Deaths-Covid-upr, 
@@ -655,7 +655,7 @@ grid.arrange(
 
 Website updated on `r format(Sys.Date(), "%d/%m/%Y")`.
 
-Website by Daniel Anderson, Giovanni Forchini, Katharina Hauck, Alessadra Lochen
+Website by Daniel Anderson, Giovanni Forchini, Katharina Hauck, Alessandra Lochen
 
 
 
