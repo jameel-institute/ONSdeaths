@@ -385,17 +385,19 @@ The pandemic is ongoing, and we only estimate excess deaths until the week endin
 # Findings
 
 
-
-### England: Deaths from week ending 06/03/2020 to week ending `r c.date` 
-
 \
+
+### England: Deaths from week ending 06/03/2020 to week ending `r c.date` ![](./England_update.png) 
 
 ```{r, echo=F, warnings = F, message=FALSE, fig.align = 'center'}
 p.england<-producePlot("England")+theme(plot.title=element_text(size=12),axis.text=element_text(size=12))
 
-grid.arrange(p.england + theme(legend.position = "none"), 
+png(filename = "England_update.png",
+     width = 7, height = 5, units = "in", res = 300)
+grid.arrange(p.england + theme(legend.position = "none"),
              ncol=1,
              bottom=g_legend(p.england + theme(legend.position="bottom",legend.text=element_text(size=10))))
+dev.off() -> .
 
 current_England <- extract_row("England")
 England_all_cause <- current_England[,3]
@@ -415,15 +417,17 @@ Over the weeks ending 6 March 2020 to `r s.date`, there were `r as.character(Eng
 
 \
 
-### Wales: Deaths from week ending 06/03/2020 to week ending `r c.date` 
+### Wales: Deaths from week ending 06/03/2020 to week ending `r c.date`
 
 ```{r, echo=F, warnings = F, message=FALSE, fig.align = 'center'}
 p.wales<-producePlot("Wales")+theme(plot.title=element_text(size=12),axis.text=element_text(size=12))
 
-
+png(filename = "Wales_update.png",
+     width = 7, height = 5, units = "in", res = 300)
 grid.arrange(p.wales + theme(legend.position = "none"),
              ncol=1,
              bottom=g_legend(p.england + theme(legend.position="bottom",legend.text=element_text(size=10))))
+dev.off() -> .
 
 current_Wales <- extract_row("Wales")
 Wales_all_cause <- current_Wales[,3]
@@ -436,6 +440,8 @@ Wales_cumulative_covid <- max(as.numeric(cumulative_Wales$Covid))
 Wales_cumulative_other <- Wales_cumulative_all_cause - Wales_cumulative_covid
 cumulative_Wales_latest <- extract_cumulative_row(cumulative_Wales)
 ```
+![](./Wales_update.png)
+
 
 In the week ending `r s.date`, there were `r as.character(Wales_all_cause)` registered all-cause deaths in Wales. These comprise of `r as.character(Wales_covid)` deaths due to COVID-19 and `r as.character(Wales_other)` deaths due to other conditions. `r string_condition_recent(current_Wales, Wales_other, 'week')`.
 
@@ -466,7 +472,7 @@ London<-producePlot("London")+q
 
 SouthEast<-producePlot("South.East")+q
 
-
+png(filename = "EnglandRegions_update.png", width = 10, height = 7.5, units = "in", res = 300)
 grid.arrange(NorthWest+ theme(legend.position = "none")+ggtitle("North West")+ylim(0, 3500),
              
              NorthEast+ theme(legend.position = "none")+ggtitle("North East")+ylim(0, 3500),
@@ -486,8 +492,8 @@ grid.arrange(NorthWest+ theme(legend.position = "none")+ggtitle("North West")+yl
             SouthEast + theme(legend.position = "none")+ggtitle("South East")+ylim(0, 3500), 
              ncol=3,
              bottom=g_legend(London + theme(legend.position="bottom",legend.text=element_text(size=18),legend.title=element_text(size=18))))
-
 ```
+![](./EnglandRegions_update.png)
 
 \
 
@@ -569,7 +575,6 @@ order<-c("England","North West","North East","Yorkshire and The Humber","West Mi
 kable(regional_tab[match(order,regional_tab$`Geographical unit`),])%>%
   kable_styling(bootstrap_options = c("striped","condensed"),full_width = F, position = "left")
 ```
-
 \
 
 ### Deaths from week ending 06/03/2020 to week ending `r c.date`, by gender and older ages, England and Wales
@@ -597,7 +602,8 @@ p.All.45.64<-producePlot("All.75.84")+q
 p.F.45.64<-producePlot("Female.75.84")+q
 p.M.45.64<-producePlot("Male.75.84")+q
 
-
+png(filename = "Olderage_update.png",
+     width = 15, height = 12, units = "in", res = 300)
 grid.arrange(p.all.85 + theme(legend.position = "none")+ggtitle("All 85+ yrs"), 
              p.F.85 + theme(legend.position = "none")+ggtitle("Female 85+ yrs"), 
              p.M.85 + theme(legend.position = "none")+ggtitle("Male 85+ yrs"), 
@@ -613,11 +619,11 @@ grid.arrange(p.all.85 + theme(legend.position = "none")+ggtitle("All 85+ yrs"),
              ncol=3,
              bottom=g_legend(p.All.45.64 + theme(legend.position="bottom",legend.text=element_text(size=18),legend.title=element_text(size=18))))
 ```
+![](./Olderage_update.png)
 
 \
 
 ### Deaths from week ending 06/03/2020 to week ending `r c.date`, by gender and younger ages, England and Wales
-
 
 ```{r, echo=F, fig.height=9, fig.width=12}
 
@@ -638,7 +644,8 @@ p.All.0.1<-producePlot("All.Under.1.year")+q
 p.F.0.1<-producePlot("Female.Under.1.year")+q
 p.M.0.1<-producePlot("Male.Under.1.year")+q
 
-
+png(filename = "Youngerage_update.png",
+     width = 12, height = 9, units = "in", res = 300)
 grid.arrange(
              p.All.15.44 + theme(legend.position = "none")+ggtitle("All 15-44 yrs"),
              p.F.15.44 + theme(legend.position = "none")+ggtitle("Female 15-44 yrs"),
@@ -650,12 +657,13 @@ grid.arrange(
              p.F.0.1+ theme(legend.position = "none")+ggtitle("Female <1 yrs"),
              p.M.0.1+ theme(legend.position = "none")+ggtitle("Male <1 yrs"),
              ncol=3,
-             bottom=g_legend(p.All.45.64 + theme(legend.position="bottom",legend.text=element_text(size=18),legend.title=element_text(size=18))) )
+             bottom=g_legend(p.All.45.64 + theme(legend.position="bottom",legend.text=element_text(size=18),legend.title=element_text(size=18))))
 ```
+![](Youngerage_update.png)
 
 Website updated on `r format(Sys.Date(), "%d/%m/%Y")`.
 
-Website by Daniel Anderson, Giovanni Forchini, Katharina Hauck, Alessandra Lochen
+Website by Daniel Anderson, Giovanni Forchini, Katharina Hauck, Alessandra Lochen, Swapnil Mishra
 
 
 
