@@ -25,7 +25,7 @@ $$γ_{jt+1}=γ_{jt}cosλ_{j}+γ_{jt}^* sinλ_{j}+ω_{jt}$$
 $$γ_{jt=1}^*=-γ_{jt}sinλ_{j}+γ_{jt}^* cosλ_{j}+ω_{jt}^*$$
 $$λ_{j}=\frac{2πk}{s}$$
 
-where ε~t~, ξ~t~, ζ~t~, ω~jt~ and ω\*~jt~ are white noise errors which are mutually uncorrelated. The term μ~t~ allows the level of the trend to increase or decrease, and ν~t~ changes the slope of the trend. The parameters γ~jt~ and γ\*~jt=1~ capture the seasonality of the series [1]. Finally, the term s=52.18 is the period and is equal to the average number of weeks in a year accounting for a leap year every four. Since deaths are under-reported in the last week of each year and over-reported in the first week of the year after, the reported deaths for the two weeks are averaged. 
+where ε~t~, ξ~t~, ζ~t~, ω~jt~ and ω\*~jt~ are white noise errors which are mutually uncorrelated. The term μ~t~ allows the level of the trend to increase or decrease, and ν~t~ changes the slope of the trend. The parameters γ~jt~ and γ\*~jt=1~ capture the seasonality of the series [5]. Finally, the term s=52.18 is the period and is equal to the average number of weeks in a year accounting for a leap year every four. Since deaths are under-reported in the last week of each year and over-reported in the first week of the year after, the reported deaths for the two weeks are averaged. 
 
 The model was estimated for different sex, age groups and regions. To maintain compatibility with previous years, the age groups 0-14, 15-44, 45-64, 65-74, 75-84 and 85+ were used. For each group and week, we present figures with four series:
 
