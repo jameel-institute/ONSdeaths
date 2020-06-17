@@ -1,41 +1,40 @@
 This directory contains the files used in the paper Excess non-COVID-19 deaths in England and Wales between 29th February and 29th May 2020 by Giovanni Forchini, Alessandra Lochen, Timothy Hallett, Paul Aylin, Peter J. White, Steven Riley, Christl Donnelly, Azra Ghani, Neil Ferguson, Katharina Hauck\
-\
+
 The number at the end of the R file denotes the sequence it needs to be run to generate the results of the paper.\
-\
+
 It also contains the RMD file used to generate the dashboard website.
 Note the dashboard may produce an error if the the week number and the file available on the ONS website do not align (This happens on Monday and maybe on Tuesday before the report is released).
 Additionally, users should ensure they have all the directories in place as the code has folder dependencies. Alternatively, users can download the GitHub contents as a zip so that all directories are already in place.
-\fs28 \
 
-\fs24 \
-This code was run with the following session:\
-R version 4.0.1 (2020-06-06)\
-Platform: x86_64-apple-darwin17.0 (64-bit)\
-Running under: macOS Sierra 10.12.6\
-Matrix products: default\
-BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib\
-LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib\
-locale:\
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8\
-\
-attached base packages:\
-[1] stats     graphics  grDevices utils     datasets  methods   base     \
-\
-other attached packages:\
- [1] ggpubr_0.3.0       lemon_0.4.5        reshape_0.8.8      stargazer_5.2.2    gridExtra_2.3      KFAS_1.3.7        \
- [7] matrixStats_0.56.0 lubridate_1.7.9    readxl_1.3.1       forcats_0.5.0      stringr_1.4.0      purrr_0.3.4       \
-[13] readr_1.3.1        tidyr_1.1.0        tibble_3.0.1       ggplot2_3.3.1      tidyverse_1.3.0    htmltools_0.4.0   \
-[19] dplyr_1.0.0       \
-\
+
+This code was run with the following session:
+R version 4.0.1 (2020-06-06)
+Platform: x86_64-apple-darwin17.0 (64-bit)
+Running under: macOS Sierra 10.12.6
+Matrix products: default
+BLAS:   /System/Library/Frameworks/Accelerate.framework/Versions/A/Frameworks/vecLib.framework/Versions/A/libBLAS.dylib
+LAPACK: /Library/Frameworks/R.framework/Versions/4.0/Resources/lib/libRlapack.dylib
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] ggpubr_0.3.0       lemon_0.4.5        reshape_0.8.8      stargazer_5.2.2    gridExtra_2.3      KFAS_1.3.7        
+ [7] matrixStats_0.56.0 lubridate_1.7.9    readxl_1.3.1       forcats_0.5.0      stringr_1.4.0      purrr_0.3.4       
+[13] readr_1.3.1        tidyr_1.1.0        tibble_3.0.1       ggplot2_3.3.1      tidyverse_1.3.0    htmltools_0.4.0   
+[19] dplyr_1.0.0       
+
 loaded via a namespace (and not attached):\
- [1] httr_1.4.1        jsonlite_1.6.1    carData_3.0-4     modelr_0.1.8      assertthat_0.2.1  blob_1.2.1       \
- [7] cellranger_1.1.0  yaml_2.2.1        pillar_1.4.4      backports_1.1.7   lattice_0.20-41   glue_1.4.1       \
-[13] digest_0.6.25     ggsignif_0.6.0    rvest_0.3.5       colorspace_1.4-1  plyr_1.8.6        pkgconfig_2.0.3  \
-[19] broom_0.5.6       haven_2.3.1       scales_1.1.1      openxlsx_4.1.5    rio_0.5.16        farver_2.0.3     \
-[25] generics_0.0.2    car_3.0-8         ellipsis_0.3.1    withr_2.2.0       cli_2.0.2         magrittr_1.5     \
-[31] crayon_1.3.4      evaluate_0.14     fs_1.4.1          fansi_0.4.1       nlme_3.1-148      rstatix_0.5.0    \
-[37] xml2_1.3.2        foreign_0.8-80    tools_4.0.1       data.table_1.12.8 hms_0.5.3         lifecycle_0.2.0  \
-[43] munsell_0.5.0     reprex_0.3.0      zip_2.0.4         compiler_4.0.1    rlang_0.4.6       grid_4.0.1       \
-[49] rstudioapi_0.11   labeling_0.3      rmarkdown_2.2     gtable_0.3.0      abind_1.4-5       DBI_1.1.0        \
-[55] rematch_1.0.1     curl_4.3          reshape2_1.4.4    R6_2.4.1          knitr_1.28        stringi_1.4.6    \
+ [1] httr_1.4.1        jsonlite_1.6.1    carData_3.0-4     modelr_0.1.8      assertthat_0.2.1  blob_1.2.1       
+ [7] cellranger_1.1.0  yaml_2.2.1        pillar_1.4.4      backports_1.1.7   lattice_0.20-41   glue_1.4.1       
+[13] digest_0.6.25     ggsignif_0.6.0    rvest_0.3.5       colorspace_1.4-1  plyr_1.8.6        pkgconfig_2.0.3  
+[19] broom_0.5.6       haven_2.3.1       scales_1.1.1      openxlsx_4.1.5    rio_0.5.16        farver_2.0.3     
+[25] generics_0.0.2    car_3.0-8         ellipsis_0.3.1    withr_2.2.0       cli_2.0.2         magrittr_1.5     
+[31] crayon_1.3.4      evaluate_0.14     fs_1.4.1          fansi_0.4.1       nlme_3.1-148      rstatix_0.5.0    
+[37] xml2_1.3.2        foreign_0.8-80    tools_4.0.1       data.table_1.12.8 hms_0.5.3         lifecycle_0.2.0  
+[43] munsell_0.5.0     reprex_0.3.0      zip_2.0.4         compiler_4.0.1    rlang_0.4.6       grid_4.0.1       
+[49] rstudioapi_0.11   labeling_0.3      rmarkdown_2.2     gtable_0.3.0      abind_1.4-5       DBI_1.1.0        
+[55] rematch_1.0.1     curl_4.3          reshape2_1.4.4    R6_2.4.1          knitr_1.28        stringi_1.4.6    
 [61] Rcpp_1.0.4.6      vctrs_0.3.1       dbplyr_1.4.4      tidyselect_1.1.0  xfun_0.14        }
