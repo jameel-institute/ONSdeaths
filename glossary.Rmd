@@ -23,5 +23,6 @@ geometry: margin=1in
 
 Website updated on `r format(Sys.Date(), "%d/%m/%Y")`.
 
-Website by Daniel Anderson, Giovanni Forchini, Katharina Hauck, Alessandra Lochen
+Website by Daniel Anderson, Giovanni Forchini, Katharina Hauck, Alessandra Lochen, Swapnil Mishra
+
 
