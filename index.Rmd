@@ -1,17 +1,24 @@
 ---
-title: "J-IDEA COVID-19 excess deaths tracker for England and Wales"
-
+title: J-IDEA COVID-19 excess deaths tracker for England and Wales
 fig_caption: yes
 fontsize: 11pt
 output:
   html_document:
     df_print: paged
-    css: styles1.css
+    css: styles.css
+    includes:
+          in_header: extLogo.html
 keep_tex: yes
 geometry: margin=1in
 subtitle: Weekly estimates of expected deaths and excess non-COVID-19 deaths during
   the pandemic in England and Wales \newline
 ---
+
+```{r, echo=FALSE}
+htmltools::img(src = knitr::image_uri("./logo.jpg"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; left:0; padding:10px;')
+```
 
 ```{r, echo=FALSE, warning=F, message=FALSE, include=FALSE}
 library(ggplot2)

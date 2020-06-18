@@ -1,6 +1,9 @@
-name: "J-IDEA COVID-19 excess deaths tracker for England and Wales"
+name: J-IDEA COVID-19 excess deaths tracker for England and Wales
 navbar: 
-  title: "J-IDEA COVID-19 excess deaths tracker for England and Wales"
+  title: J-IDEA COVID-19 excess deaths tracker for England and Wales
+  right:
+    - image: “logo”
+      href: logo.jpg
   left:
     - text: "Report"
       href: index.html
@@ -14,3 +17,6 @@ navbar:
       href: Statistical_analysis.html
     - text: "References"
       href: References.html
+output:
+  html_document:
+    css: styles1.css
