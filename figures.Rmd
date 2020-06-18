@@ -4,6 +4,10 @@ fontsize: 11pt
 output: html_document
 geometry: margin=1in
 ---
+<center>
+
+\
+
 ![**Figure 1:** Weekly excess non-COVID-19 deaths are higher than expected deaths.](./figures/figure1.jpeg){width=700px}
 
 Note: red line: all-cause registered deaths, purple line: registered non-COVID-19 deaths, dashed black line: expected (forecast) deaths with confidence interval; estimated quantities in italics
@@ -17,3 +21,8 @@ Note: red line: all-cause registered deaths, purple line: registered non-COVID-1
 \
 
 ![**Figure 3:** Weekly excess non-COVID-19 deaths are lower than expected deaths.](./figures/figure3.jpeg){width=700px}
+
+\
+\
+
+</center>

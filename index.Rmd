@@ -7,18 +7,11 @@ output:
     df_print: paged
     css: styles.css
     includes:
-          in_header: extLogo.html
+      after_body: "footer.html"
 keep_tex: yes
 geometry: margin=1in
-subtitle: Weekly estimates of expected deaths and excess non-COVID-19 deaths during
-  the pandemic in England and Wales \newline
+subtitle: Weekly estimates of expected deaths and excess non-COVID-19 deaths during the pandemic in England and Wales
 ---
-
-```{r, echo=FALSE}
-htmltools::img(src = knitr::image_uri("./logo.jpg"), 
-               alt = 'logo', 
-               style = 'position:absolute; top:0; left:0; padding:10px;')
-```
 
 ```{r, echo=FALSE, warning=F, message=FALSE, include=FALSE}
 library(ggplot2)
@@ -362,6 +355,7 @@ string_condition_recent <- function(row, other_deaths, time){
 ```
 
 \
+
 Correspondence: [Katharina Hauck](mailto:k.hauck@imperial.ac.uk), [Neil Ferguson](mailto:n.ferguson@imperial.ac.uk)
 
 \
@@ -391,7 +385,7 @@ Variations in deaths: The figures show steep increases and declines for COVID-19
 
 \
 
-The pandemic is ongoing, and we only estimate excess deaths until the week ending in `r s.date`. It is possible that the pandemic will impact on deaths in months and even years to come, including due to delays in cancer treatment resulting in treatable cancer becoming untreatable and causing death occurring months or years later. There is inherent uncertainty in forecasting deaths. We find that our model reliably predicts reported deaths in the pre-pandemic period between July 2019 and February 2020 based on data going back to 2010 ([Report 28](https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-17-COVID19-Report-28.pdf)). However, there is no guarantee that a model that fits the pre-pandemic time period is forecasting well for the pandemic period that saw unprecedented changes in hospital care provision, patient behaviour, and many other factors including possibly the reporting of deaths itself. The uncertainty around our forecasts may take account of some but not all of this uncertainty. Moreover, we cannot take account of irregularities in the reporting of COVID-19 and non-COVID-19 deaths. For further limitations see ([Report 28](https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-17-COVID19-Report-28.pdf)).
+The pandemic is ongoing, and we only estimate excess deaths until the week ending in `r s.date`. It is possible that the pandemic will impact on deaths in months and even years to come, including due to delays in cancer treatment resulting in treatable cancer becoming untreatable and causing death occurring months or years later. There is inherent uncertainty in forecasting deaths. We find that our model reliably predicts reported deaths in the pre-pandemic period between July 2019 and February 2020 based on data going back to 2010 ([Report 28](https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-18-COVID19-Report-28.pdf)). However, there is no guarantee that a model that fits the pre-pandemic time period is forecasting well for the pandemic period that saw unprecedented changes in hospital care provision, patient behaviour, and many other factors including possibly the reporting of deaths itself. The uncertainty around our forecasts may take account of some but not all of this uncertainty. Moreover, we cannot take account of irregularities in the reporting of COVID-19 and non-COVID-19 deaths. For further limitations see ([Report 28](https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-18-COVID19-Report-28.pdf)).
 
 \
 

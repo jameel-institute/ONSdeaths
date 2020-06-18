@@ -5,6 +5,9 @@ output: html_document
 geometry: margin=1in
 ---
 
+\
+
+
 1.	Office for National Statistics. Deaths registered weekly in England and Wales, provisional. 2020; Available from: https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/datasets/weeklyprovisionalfiguresondeathsregisteredinenglandandwales.
 2.	Office for National Statistics. User guide to mortality statistics. 2019; Available from: https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/methodologies/userguidetomortalitystatisticsjuly2017.
 3.	Office for National Statistics, Comparison of weekly death occurrences in England and Wales: up to week ending 17 April 2020, Office for National Statistics, Editor. 2020.

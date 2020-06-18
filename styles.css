@@ -13,18 +13,19 @@
 }
 
 body {
-  padding-top: 0 !important;
+  padding-top: 10 !important;
   padding-bottom: 0 !important;
 }
 
 h2 {
-  color: #FFFFFF;
+  padding-top: 2%;
   padding-right: 2% !important;
   padding-left: 2% !important;
 }
 
 
 h3 {
+  padding-top: 10px;
   padding-right: 2% !important;
   padding-left: 2% !important;
 }
@@ -50,13 +51,6 @@ p {
   max-width: 95%;
 }
 
-.logo {
-  scale: 15%;
-  margin-top: 15px;
-  margin-bottom: 10px;
-  float: left;
-}
-
 .title toc-ignore {
   color: #FFFFFF !important;
   display: none;
@@ -64,7 +58,6 @@ p {
 
 @media (max-width: 1000px) {
   .navbar-header {
-    color: #FFFFFF;
       float: none;
   }
   .navbar-left,.navbar-right {
@@ -94,7 +87,6 @@ p {
   .navbar-nav>li>a {
       padding-top: 10px;
       padding-bottom: 10px;
-      color: #FFFFFF;
   }
   .collapse.in{
       display:block !important;
@@ -105,12 +97,8 @@ h1 {
   display: none !important;
 }
 
-a.navbar-brand {
-  color: #FFFFFF;
-}
-
-.navbar-default .navbar-text {
-  color: #FFFFFF;
+.navbar-default .navbar-brand {
+    color: #FFFFFF;
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:hover, .navbar-default .navbar-nav>.active>a:focus {
@@ -128,7 +116,7 @@ a.navbar-brand {
   background-color: #003E74 !important;
 }
 
-#footer {
+.footer {
   padding: 20px;
   color: white;
   background-color: #333;
