@@ -5,11 +5,18 @@ fontsize: 11pt
 output:
   html_document:
     df_print: paged
+    css: styles.css
 keep_tex: yes
 geometry: margin=1in
 subtitle: Weekly estimates of expected deaths and excess non-COVID-19 deaths during
   the pandemic in England and Wales \newline
 ---
+
+```{r, echo=FALSE}
+htmltools::img(src = knitr::image_uri("logo.jpg"), 
+               alt = 'logo', 
+               style = 'position:absolute; top:0; left:0; padding:10px;')
+```
 
 ```{r, echo=FALSE, warning=F, message=FALSE, include=FALSE}
 library(ggplot2)
@@ -350,7 +357,6 @@ string_condition_recent <- function(row, other_deaths, time){
     }
   return(string)
 }
-
 ```
 
 \
@@ -358,7 +364,7 @@ Correspondence: [Katharina Hauck](mailto:k.hauck@imperial.ac.uk), [Neil Ferguson
 
 \
 
-# Introduction
+### Introduction
 \
 
 This website provides weekly updates of deaths in England and Wales using publicly available data on the provisional number of deaths registered in the past week from the Office of National Statistics ([see Data](Data.html)). We show the number of registered all-cause deaths, and the deaths registered as COVID-19 deaths as provided by the ONS for every week beginning in March 2020. We compare the all-cause deaths with the number of deaths we would have expected to see being registered in this week had there been no pandemic, based on numbers of deaths in corresponding weeks of previous years, and determine the number of excess deaths as the difference. We then compare the excess deaths with the recorded COVID-19 deaths, which gives an estimate of excess deaths that were not associated with COVID-19 according to official registers. These estimates of excess non-COVID-19 deaths inform whether the pandemic led to unexpected deaths that were higher (or lower) than what we would have expected in that week ([Figure 1](figures.html)). It is possible that all or almost all excess deaths comprise of registered COVID-19 deaths, in that situation there are no excess non-COVID-19 deaths ([Figure 2](figures.html)). It is also possible that excess non-COVID-19 deaths are actually lower than expected deaths, once registered COVID-19 deaths are subtracted from excess deaths ([Figure 3](figures.html)). We also present total cumulative deaths across all categories. This is the sum of registered all-cause deaths, COVID-19 deaths, expected deaths and excess non-COVID-19 deaths from the week ending 6 March 2020 to `r s.date`. 
@@ -367,7 +373,7 @@ It is not straightforward to estimate expected deaths, because the number of dea
 
 \
 
-# Possible interpretations of excess non-COVID-19 deaths
+### Possible interpretations of excess non-COVID-19 deaths
 
 \
 
@@ -379,7 +385,7 @@ Variations in deaths: The figures show steep increases and declines for COVID-19
 
 \
 
-# Limitations
+### Limitations
 
 \
 
@@ -387,7 +393,7 @@ The pandemic is ongoing, and we only estimate excess deaths until the week endin
 
 \
 
-# Findings
+### Findings
 
 
 \
