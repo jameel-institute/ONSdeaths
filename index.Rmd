@@ -1,22 +1,17 @@
 ---
 title: "J-IDEA COVID-19 excess deaths tracker for England and Wales"
+
 fig_caption: yes
 fontsize: 11pt
 output:
   html_document:
     df_print: paged
-    css: styles.css
+    css: styles1.css
 keep_tex: yes
 geometry: margin=1in
 subtitle: Weekly estimates of expected deaths and excess non-COVID-19 deaths during
   the pandemic in England and Wales \newline
 ---
-
-```{r, echo=FALSE}
-htmltools::img(src = knitr::image_uri("logo.jpg"), 
-               alt = 'logo', 
-               style = 'position:absolute; top:0; left:0; padding:10px;')
-```
 
 ```{r, echo=FALSE, warning=F, message=FALSE, include=FALSE}
 library(ggplot2)
@@ -398,7 +393,7 @@ The pandemic is ongoing, and we only estimate excess deaths until the week endin
 
 \
 
-### England: Deaths from week ending 06/03/2020 to week ending `r c.date` ![](./England_update.png) 
+### England: Deaths from week ending 06/03/2020 to week ending `r c.date`
 
 \
 
@@ -423,6 +418,7 @@ England_cumulative_covid <- max(as.numeric(cumulative_England$Covid))
 England_cumulative_other <- England_cumulative_all_cause - England_cumulative_covid
 cumulative_England_latest <- extract_cumulative_row(cumulative_England)
 ```
+![](./England_update.png) 
 
 In the week ending `r s.date`, there were `r as.character(England_all_cause)` registered all-cause deaths in England. These comprise of `r as.character(England_covid)` deaths registered due to COVID-19 and `r as.character(England_other)` deaths registered due to other conditions. `r string_condition_recent(current_England, England_other, 'week')`
 
@@ -465,7 +461,7 @@ Over the weeks ending 6 March 2020 to `r s.date`, there were `r as.character(Wal
 \
 
 
-### Deaths from week ending 06/03/2020 to week ending `r c.date`, English regions
+### English regions: Deaths from week ending 06/03/2020 to week ending `r c.date`
 
 \
 
@@ -515,7 +511,7 @@ grid.arrange(NorthWest+ theme(legend.position = "none")+ggtitle("North West")+yl
 
 \
 
-### Table: Cumulative deaths from week ending 06/03/2020 to week ending `r c.date`, English regions
+### England and Wales: Cumulative deaths from week ending 06/03/2020 to week ending `r c.date`
 
 \
 
@@ -598,7 +594,7 @@ kable(regional_tab[match(order,regional_tab$`Geographical unit`),])%>%
 
 \
 
-### Deaths from week ending 06/03/2020 to week ending `r c.date`, by gender and older ages, England and Wales
+### England and Wales, older age groups: Deaths from week ending 06/03/2020 to week ending `r c.date`
 
 \
 
@@ -645,7 +641,7 @@ grid.arrange(p.all.85 + theme(legend.position = "none")+ggtitle("All 85+ yrs"),
 
 \
 
-### Table: Cumulative deaths from week ending 06/03/2020 to week ending `r c.date`, older age groups
+### England and Wales, older age groups: Cumulative deaths from week ending 06/03/2020 to week ending `r c.date`
 
 \
 
@@ -728,7 +724,7 @@ kable(agegrp_tab) %>%
 ```
 \
 
-### Deaths from week ending 06/03/2020 to week ending `r c.date`, by gender and younger ages, England and Wales
+### England and Wales, younger age groups: Deaths from week ending 06/03/2020 to week ending `r c.date`
 
 \
 
