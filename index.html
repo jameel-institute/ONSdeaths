@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>J-IDEA COVID-19 excess deaths tracker for England and Wales</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">J-IDEA COVID-19 excess deaths tracker for England and Wales</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Report</a>
+</li>
+<li>
+  <a href="glossary.html">Glossary</a>
+</li>
+<li>
+  <a href="figures.html">Figures</a>
+</li>
+<li>
+  <a href="Data.html">Data</a>
+</li>
+<li>
+  <a href="Statistical_analysis.html">Statistical Analysis</a>
+</li>
+<li>
+  <a href="References.html">References</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">J-IDEA COVID-19 excess deaths tracker for England and Wales</h1>
+<h3 class="subtitle">Weekly estimates of expected deaths and excess non-COVID-19 deaths during the pandemic in England and Wales</h3>
+
+</div>
+
+
+<p><br />
+</p>
+<p>Correspondence: <a href="mailto:k.hauck@imperial.ac.uk">Katharina Hauck</a>, <a href="mailto:n.ferguson@imperial.ac.uk">Neil Ferguson</a></p>
+<p><br />
+</p>
+<div id="introduction" class="section level3">
+<h3>Introduction</h3>
+<p><br />
+</p>
+<p>This website provides weekly updates of deaths in England and Wales using publicly available data on the provisional number of deaths registered in the past week from the Office of National Statistics (<a href="Data.html">see Data</a>). We show the number of registered all-cause deaths, and the deaths registered as COVID-19 deaths as provided by the ONS for every week beginning in March 2020. We compare the all-cause deaths with the number of deaths we would have expected to see being registered in this week had there been no pandemic, based on numbers of deaths in corresponding weeks of previous years, and determine the number of excess deaths as the difference. We then compare the excess deaths with the recorded COVID-19 deaths, which gives an estimate of excess deaths that were not associated with COVID-19 according to official registers. These estimates of excess non-COVID-19 deaths inform whether the pandemic led to unexpected deaths that were higher (or lower) than what we would have expected in that week (<a href="figures.html">Figure 1</a>). It is possible that all or almost all excess deaths comprise of registered COVID-19 deaths, in that situation there are no excess non-COVID-19 deaths (<a href="figures.html">Figure 2</a>). It is also possible that excess non-COVID-19 deaths are actually lower than expected deaths, once registered COVID-19 deaths are subtracted from excess deaths (<a href="figures.html">Figure 3</a>). We also present total cumulative deaths across all categories. This is the sum of registered all-cause deaths, COVID-19 deaths, expected deaths and excess non-COVID-19 deaths from the week ending 6 March 2020 to 12 June 2020.</p>
+<p>It is not straightforward to estimate expected deaths, because the number of deaths in the absence of the pandemic is inherently unobservable. We forecast the expected number of deaths in each week from March 2020 onwards using time series methods and data on deaths going back to 2010. We consider the uncertainty around our estimates using confidence intervals. For further details, see the <a href="Statistical_analysis.html">Methods section</a>.</p>
+<p><br />
+</p>
+</div>
+<div id="possible-interpretations-of-excess-non-covid-19-deaths" class="section level3">
+<h3>Possible interpretations of excess non-COVID-19 deaths</h3>
+<p><br />
+</p>
+<p>If excess non-COVID-19 deaths are higher than expected deaths: First, it is possible that deaths actually caused by COVID-19 are incorrectly attributed to other conditions. This could be due to lack of a diagnosis, nonspecific symptoms before death, multimorbidity making attribution of death difficult, lack of knowledge by the reporting medical staff, or stigma-related concerns of family members. Non-COVID-19 related deaths could be genuinely higher during the pandemic. First, the pandemic has caused disruption to healthcare provision. Hospitals have cancelled elective surgeries in some weeks, possibly resulting in increased mortality in those patients. Second, even critically ill patients may be reluctant to access care, for fear of hospital-acquired infections. Both inability and reluctance to access care may have led to patients’ death, when they would have survived in the absence of the pandemic.</p>
+<p>If excess non-COVID-19 deaths are lower than expected deaths: This finding could be due to irregularities in reporting. Second, the reduction in mobility and travel associated with control measures, particularly stay-at-home orders, may result in a reduction in accidents and associated deaths. Third, it is also possible that COVID-19 disease may cause mortality displacement, a short-term forward shift in mortality whereby a certain proportion of deaths due to COVID-19 occurred in patients that would have died of other conditions in the following weeks or months. This implies that over time, COVID-19 deaths that are higher than expected all-cause deaths are followed by lower than expected non-COVID-19 deaths in the following weeks and months, resulting in a deficit in excess non-COVID-19 deaths. In addition, hospitals have increased their capacity over time to treat non-COVID patients or patients changed their behaviour and started visiting hospitals again resulting in a reduction in deaths in line with expected levels.</p>
+<p>Variations in deaths: The figures show steep increases and declines for COVID-19 deaths and unexplained deaths in some regions and for some ages over the weeks since March 2020. In some regions and weeks, excess non-COVID-19 deaths are even lower than expected deaths. These findings could have several explanations. First, case numbers vary over the pandemic, leading to variations in hospitalizations and deaths with a 2 to 3 weeks delay on average. Second, there may be irregularities in reporting. For example, in the first weeks of the pandemic, deaths due to COVID-19 may have been wrongly attributed to other conditions instead of COVID-19 but and in later weeks, non-COVID-19 deaths may have been wrongly attributed to COVID-19.</p>
+<p><br />
+</p>
+</div>
+<div id="limitations" class="section level3">
+<h3>Limitations</h3>
+<p><br />
+</p>
+<p>The pandemic is ongoing, and we only estimate excess deaths until the week ending in 12 June 2020. It is possible that the pandemic will impact on deaths in months and even years to come, including due to delays in cancer treatment resulting in treatable cancer becoming untreatable and causing death occurring months or years later. There is inherent uncertainty in forecasting deaths. We find that our model reliably predicts reported deaths in the pre-pandemic period between July 2019 and February 2020 based on data going back to 2010 (<a href="https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-18-COVID19-Report-28.pdf">Report 28</a>). However, there is no guarantee that a model that fits the pre-pandemic time period is forecasting well for the pandemic period that saw unprecedented changes in hospital care provision, patient behaviour, and many other factors including possibly the reporting of deaths itself. The uncertainty around our forecasts may take account of some but not all of this uncertainty. Moreover, we cannot take account of irregularities in the reporting of COVID-19 and non-COVID-19 deaths. For further limitations see (<a href="https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-18-COVID19-Report-28.pdf">Report 28</a>).</p>
+<p><br />
+</p>
+</div>
+<div id="findings" class="section level3">
+<h3>Findings</h3>
+<p><br />
+</p>
+</div>
+<div id="england-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
+<h3>England: Deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<p><br />
+</p>
+<p><img src="England_update.png" /></p>
+<p>In the week ending 12 June 2020, there were 9391 registered all-cause deaths in England. These comprise of 1057 deaths registered due to COVID-19 and 8334 deaths registered due to other conditions.</p>
+<p>Over the weeks ending 6 March 2020 to 12 June 2020, there were 198794 cumulative registered all-cause deaths in England. These comprise of 45793 deaths due to COVID-19 and 153001 deaths due to other conditions. We would have expected 145365 (95% CI 142938 – 147936) all-cause deaths for that period. This implies that total excess deaths were between 50858 – 55856, and comprised of 7636 (95% CI 5065 – 10063) non-COVID-19 excess deaths.</p>
+<p><br />
+</p>
+</div>
+<div id="england-weekly-deaths-since-06032020" class="section level3">
+<h3>England: Weekly deaths since 06/03/2020</h3>
+<p><br />
+</p>
+<table class="table table-striped table-condensed" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Week ended
+</th>
+<th style="text-align:left;">
+Reported all-cause deaths
+</th>
+<th style="text-align:left;">
+Expected (%)
+</th>
+<th style="text-align:left;">
+Expected 95% prediction interval (%)
+</th>
+<th style="text-align:left;">
+COVID-19 (%)
+</th>
+<th style="text-align:left;">
+Excess non-COVID-19
+</th>
+<th style="text-align:left;">
+Excess non-COVID-19 95% prediction interval (%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+2020-03-06
+</td>
+<td style="text-align:left;">
+10,225
+</td>
+<td style="text-align:left;">
+10,631 (104.0%)
+</td>
+<td style="text-align:left;">
+9,092 - 12,169 (88.9% - 119%)
+</td>
+<td style="text-align:left;">
+0 (0%)
+</td>
+<td style="text-align:left;">
+-406 (-4%)
+</td>
+<td style="text-align:left;">
+-1,944 - 1,133 (-19% - 11.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-03-13
+</td>
+<td style="text-align:left;">
+10,317
+</td>
+<td style="text-align:left;">
+10,419 (101.0%)
+</td>
+<td style="text-align:left;">
+8,880 - 11,957 (86.1% - 115.9%)
+</td>
+<td style="text-align:left;">
+5 (0%)
+</td>
+<td style="text-align:left;">
+-107 (-1%)
+</td>
+<td style="text-align:left;">
+-1,645 - 1,432 (-15.9% - 13.9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-03-20
+</td>
+<td style="text-align:left;">
+9,903
+</td>
+<td style="text-align:left;">
+9,754 (98.5%)
+</td>
+<td style="text-align:left;">
+8,215 - 11,292 (83% - 114%)
+</td>
+<td style="text-align:left;">
+100 (1%)
+</td>
+<td style="text-align:left;">
+49 (0.5%)
+</td>
+<td style="text-align:left;">
+-1,489 - 1,588 (-15% - 16%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-03-27
+</td>
+<td style="text-align:left;">
+10,412
+</td>
+<td style="text-align:left;">
+9,666 (92.8%)
+</td>
+<td style="text-align:left;">
+8,127 - 11,204 (78.1% - 107.6%)
+</td>
+<td style="text-align:left;">
+515 (4.9%)
+</td>
+<td style="text-align:left;">
+231 (2.2%)
+</td>
+<td style="text-align:left;">
+-1,307 - 1,770 (-12.6% - 17%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-04-03
+</td>
+<td style="text-align:left;">
+15,443
+</td>
+<td style="text-align:left;">
+10,196 (66.0%)
+</td>
+<td style="text-align:left;">
+8,658 - 11,734 (56.1% - 76%)
+</td>
+<td style="text-align:left;">
+3,330 (21.6%)
+</td>
+<td style="text-align:left;">
+1,917 (12.4%)
+</td>
+<td style="text-align:left;">
+379 - 3,455 (2.5% - 22.4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-04-10
+</td>
+<td style="text-align:left;">
+17,563
+</td>
+<td style="text-align:left;">
+10,125 (57.6%)
+</td>
+<td style="text-align:left;">
+8,586 - 11,663 (48.9% - 66.4%)
+</td>
+<td style="text-align:left;">
+5,899 (33.6%)
+</td>
+<td style="text-align:left;">
+1,539 (8.8%)
+</td>
+<td style="text-align:left;">
+1 - 3,078 (0% - 17.5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-04-17
+</td>
+<td style="text-align:left;">
+21,157
+</td>
+<td style="text-align:left;">
+9,794 (46.3%)
+</td>
+<td style="text-align:left;">
+8,256 - 11,332 (39% - 53.6%)
+</td>
+<td style="text-align:left;">
+8,335 (39.4%)
+</td>
+<td style="text-align:left;">
+3,028 (14.3%)
+</td>
+<td style="text-align:left;">
+1,490 - 4,566 (7% - 21.6%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-04-24
+</td>
+<td style="text-align:left;">
+20,841
+</td>
+<td style="text-align:left;">
+9,952 (47.7%)
+</td>
+<td style="text-align:left;">
+8,413 - 11,490 (40.4% - 55.1%)
+</td>
+<td style="text-align:left;">
+7,806 (37.5%)
+</td>
+<td style="text-align:left;">
+3,083 (14.8%)
+</td>
+<td style="text-align:left;">
+1,545 - 4,622 (7.4% - 22.2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-05-01
+</td>
+<td style="text-align:left;">
+17,004
+</td>
+<td style="text-align:left;">
+9,374 (55.1%)
+</td>
+<td style="text-align:left;">
+7,835 - 10,912 (46.1% - 64.2%)
+</td>
+<td style="text-align:left;">
+5,748 (33.8%)
+</td>
+<td style="text-align:left;">
+1,882 (11.1%)
+</td>
+<td style="text-align:left;">
+344 - 3,421 (2% - 20.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-05-08
+</td>
+<td style="text-align:left;">
+11,946
+</td>
+<td style="text-align:left;">
+9,591 (80.3%)
+</td>
+<td style="text-align:left;">
+8,052 - 11,129 (67.4% - 93.2%)
+</td>
+<td style="text-align:left;">
+3,716 (31.1%)
+</td>
+<td style="text-align:left;">
+-1,361 (-11.4%)
+</td>
+<td style="text-align:left;">
+-2,899 - 178 (-24.3% - 1.5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-05-15
+</td>
+<td style="text-align:left;">
+13,783
+</td>
+<td style="text-align:left;">
+9,686 (70.3%)
+</td>
+<td style="text-align:left;">
+8,148 - 11,225 (59.1% - 81.4%)
+</td>
+<td style="text-align:left;">
+3,624 (26.3%)
+</td>
+<td style="text-align:left;">
+473 (3.4%)
+</td>
+<td style="text-align:left;">
+-1,066 - 2,011 (-7.7% - 14.6%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-05-22
+</td>
+<td style="text-align:left;">
+11,586
+</td>
+<td style="text-align:left;">
+8,947 (77.2%)
+</td>
+<td style="text-align:left;">
+7,408 - 10,485 (63.9% - 90.5%)
+</td>
+<td style="text-align:left;">
+2,455 (21.2%)
+</td>
+<td style="text-align:left;">
+184 (1.6%)
+</td>
+<td style="text-align:left;">
+-1,354 - 1,723 (-11.7% - 14.9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-05-29
+</td>
+<td style="text-align:left;">
+9,228
+</td>
+<td style="text-align:left;">
+8,677 (94.0%)
+</td>
+<td style="text-align:left;">
+7,139 - 10,215 (77.4% - 110.7%)
+</td>
+<td style="text-align:left;">
+1,715 (18.6%)
+</td>
+<td style="text-align:left;">
+-1,164 (-12.6%)
+</td>
+<td style="text-align:left;">
+-2,702 - 374 (-29.3% - 4.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-05
+</td>
+<td style="text-align:left;">
+9,995
+</td>
+<td style="text-align:left;">
+9,472 (94.8%)
+</td>
+<td style="text-align:left;">
+7,933 - 11,010 (79.4% - 110.2%)
+</td>
+<td style="text-align:left;">
+1,488 (14.9%)
+</td>
+<td style="text-align:left;">
+-965 (-9.7%)
+</td>
+<td style="text-align:left;">
+-2,503 - 574 (-25% - 5.7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-12
+</td>
+<td style="text-align:left;">
+9,391
+</td>
+<td style="text-align:left;">
+9,053 (96.4%)
+</td>
+<td style="text-align:left;">
+7,515 - 10,592 (80% - 112.8%)
+</td>
+<td style="text-align:left;">
+1,057 (11.3%)
+</td>
+<td style="text-align:left;">
+-719 (-7.7%)
+</td>
+<td style="text-align:left;">
+-2,258 - 819 (-24% - 8.7%)
+</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+</div>
+<div id="english-regions-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
+<h3>English regions: Deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<p><br />
+</p>
+<p><img src="EnglandRegions_update.png" /></p>
+<p><br />
+</p>
+</div>
+<div id="wales-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
+<h3>Wales: Deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<p><br />
+</p>
+<p><img src="Wales_update.png" /></p>
+<p>In the week ending 12 June 2020, there were 574 registered all-cause deaths in Wales. These comprise of 57 deaths due to COVID-19 and 517 deaths due to other conditions.</p>
+<p>Over the weeks ending 6 March 2020 to 12 June 2020, there were 11852 cumulative registered all-cause deaths in Wales. These comprise of 2351 deaths due to COVID-19 and 9501 deaths due to other conditions.</p>
+<p><br />
+</p>
+</div>
+<div id="england-and-wales-cumulative-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
+<h3>England and Wales: Cumulative deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<p><br />
+</p>
+<table class="table table-striped table-condensed" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Geographical unit
+</th>
+<th style="text-align:left;">
+Reported all-cause deaths
+</th>
+<th style="text-align:left;">
+Expected (%)
+</th>
+<th style="text-align:left;">
+Expected 95% confidence interval (%)
+</th>
+<th style="text-align:left;">
+COVID-19 (%)
+</th>
+<th style="text-align:left;">
+Excess non-COVID-19 (%)
+</th>
+<th style="text-align:left;">
+Excess non-COVID-19 95% confidence interval (%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+England
+</td>
+<td style="text-align:left;">
+198,794
+</td>
+<td style="text-align:left;">
+145,365 (73.1%)
+</td>
+<td style="text-align:left;">
+142,938 -147,936 (71.9% - 74.4%)
+</td>
+<td style="text-align:left;">
+45,793 (23%)
+</td>
+<td style="text-align:left;">
+7,636 (3.8%)
+</td>
+<td style="text-align:left;">
+5,065 - 10,063 (2.5% - 5.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+North West
+</td>
+<td style="text-align:left;">
+29,091
+</td>
+<td style="text-align:left;">
+20,339 (69.9%)
+</td>
+<td style="text-align:left;">
+18,441 - 22,302 (63.4% - 76.7%)
+</td>
+<td style="text-align:left;">
+7,206 (24.8%)
+</td>
+<td style="text-align:left;">
+1,546 (5.3%)
+</td>
+<td style="text-align:left;">
+-417 - 3,444 (-1.4% - 11.8%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+North East
+</td>
+<td style="text-align:left;">
+10,957
+</td>
+<td style="text-align:left;">
+7,666 (70.0%)
+</td>
+<td style="text-align:left;">
+6,896 - 8,430 (62.9% - 76.9%)
+</td>
+<td style="text-align:left;">
+2,694 (24.6%)
+</td>
+<td style="text-align:left;">
+597 (5.4%)
+</td>
+<td style="text-align:left;">
+-167 - 1,367 (-1.5% - 12.5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Yorkshire and The Humber
+</td>
+<td style="text-align:left;">
+20,266
+</td>
+<td style="text-align:left;">
+14,780 (72.9%)
+</td>
+<td style="text-align:left;">
+13,532 - 16,142 (66.8% - 79.6%)
+</td>
+<td style="text-align:left;">
+4,421 (21.8%)
+</td>
+<td style="text-align:left;">
+1,065 (5.3%)
+</td>
+<td style="text-align:left;">
+-297 - 2,313 (-1.5% - 11.4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+West Midlands
+</td>
+<td style="text-align:left;">
+22,806
+</td>
+<td style="text-align:left;">
+15,721 (68.9%)
+</td>
+<td style="text-align:left;">
+14,393 - 17,005 (63.1% - 74.6%)
+</td>
+<td style="text-align:left;">
+5,381 (23.6%)
+</td>
+<td style="text-align:left;">
+1,704 (7.5%)
+</td>
+<td style="text-align:left;">
+420 - 3,032 (1.8% - 13.3%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+East Midlands
+</td>
+<td style="text-align:left;">
+17,352
+</td>
+<td style="text-align:left;">
+13,042 (75.2%)
+</td>
+<td style="text-align:left;">
+11,900 - 14,295 (68.6% - 82.4%)
+</td>
+<td style="text-align:left;">
+3,536 (20.4%)
+</td>
+<td style="text-align:left;">
+774 (4.5%)
+</td>
+<td style="text-align:left;">
+-479 - 1,916 (-2.8% - 11%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+East
+</td>
+<td style="text-align:left;">
+22,568
+</td>
+<td style="text-align:left;">
+16,249 (72.0%)
+</td>
+<td style="text-align:left;">
+14,772 - 17,726 (65.5% - 78.5%)
+</td>
+<td style="text-align:left;">
+4,725 (20.9%)
+</td>
+<td style="text-align:left;">
+1,594 (7.1%)
+</td>
+<td style="text-align:left;">
+117 - 3,071 (0.5% - 13.6%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+South West
+</td>
+<td style="text-align:left;">
+20,010
+</td>
+<td style="text-align:left;">
+15,960 (79.8%)
+</td>
+<td style="text-align:left;">
+14,390 - 17,511 (71.9% - 87.5%)
+</td>
+<td style="text-align:left;">
+2,786 (13.9%)
+</td>
+<td style="text-align:left;">
+1,264 (6.3%)
+</td>
+<td style="text-align:left;">
+-287 - 2,834 (-1.4% - 14.2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+London
+</td>
+<td style="text-align:left;">
+23,889
+</td>
+<td style="text-align:left;">
+13,700 (57.4%)
+</td>
+<td style="text-align:left;">
+12,571 - 14,852 (52.6% - 62.2%)
+</td>
+<td style="text-align:left;">
+8,289 (34.7%)
+</td>
+<td style="text-align:left;">
+1,900 (8%)
+</td>
+<td style="text-align:left;">
+748 - 3,029 (3.1% - 12.7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+South East
+</td>
+<td style="text-align:left;">
+31,855
+</td>
+<td style="text-align:left;">
+22,959 (72.1%)
+</td>
+<td style="text-align:left;">
+20,998 - 24,959 (65.9% - 78.4%)
+</td>
+<td style="text-align:left;">
+6,755 (21.2%)
+</td>
+<td style="text-align:left;">
+2,141 (6.7%)
+</td>
+<td style="text-align:left;">
+141 - 4,102 (0.4% - 12.9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Wales
+</td>
+<td style="text-align:left;">
+11,852
+</td>
+<td style="text-align:left;">
+9,565 (80.7%)
+</td>
+<td style="text-align:left;">
+8,551 - 10,544 (72.2% - 89%)
+</td>
+<td style="text-align:left;">
+2,351 (19.8%)
+</td>
+<td style="text-align:left;">
+-64 (-0.5%)
+</td>
+<td style="text-align:left;">
+-1,043 - 950 (-8.8% - 8%)
+</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+</div>
+<div id="england-and-wales-older-age-groups-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
+<h3>England and Wales, older age groups: Deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<p><br />
+</p>
+<p><img src="Olderage_update.png" /></p>
+<p><br />
+</p>
+</div>
+<div id="england-and-wales-older-age-groups-cumulative-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
+<h3>England and Wales, older age groups: Cumulative deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<p><br />
+</p>
+<table class="table table-striped table-condensed" style="width: auto !important; ">
+<thead>
+<tr>
+<th style="text-align:left;">
+Sex and age group (years)
+</th>
+<th style="text-align:left;">
+Reported all-cause deaths
+</th>
+<th style="text-align:left;">
+Expected (%)
+</th>
+<th style="text-align:left;">
+Expected 95% confidence interval (%)
+</th>
+<th style="text-align:left;">
+COVID-19 (%)
+</th>
+<th style="text-align:left;">
+Excess non-COVID-19 (%)
+</th>
+<th style="text-align:left;">
+Excess non-COVID-19 95% confidence interval (%)
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+All: 45-64
+</td>
+<td style="text-align:left;">
+23,797
+</td>
+<td style="text-align:left;">
+18,092 (76.0%)
+</td>
+<td style="text-align:left;">
+17,471 -18,726 (73.4% - 78.7%)
+</td>
+<td style="text-align:left;">
+4,637 (19.5%)
+</td>
+<td style="text-align:left;">
+1,068 (4.5%)
+</td>
+<td style="text-align:left;">
+434 - 1,689 (1.8% - 7.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+All: 65-74
+</td>
+<td style="text-align:left;">
+33,089
+</td>
+<td style="text-align:left;">
+25,384 (76.7%)
+</td>
+<td style="text-align:left;">
+24,473 -26,370 (74% - 79.7%)
+</td>
+<td style="text-align:left;">
+7,132 (21.6%)
+</td>
+<td style="text-align:left;">
+573 (1.7%)
+</td>
+<td style="text-align:left;">
+-413 - 1,484 (-1.2% - 4.5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+All: 75-84
+</td>
+<td style="text-align:left;">
+61,608
+</td>
+<td style="text-align:left;">
+42,287 (68.6%)
+</td>
+<td style="text-align:left;">
+38,713 -45,685 (62.8% - 74.2%)
+</td>
+<td style="text-align:left;">
+15,584 (25.3%)
+</td>
+<td style="text-align:left;">
+3,737 (6.1%)
+</td>
+<td style="text-align:left;">
+339 - 7,311 (0.6% - 11.9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+All: 85+
+</td>
+<td style="text-align:left;">
+86,943
+</td>
+<td style="text-align:left;">
+62,839 (72.3%)
+</td>
+<td style="text-align:left;">
+61,405 -64,214 (70.6% - 73.9%)
+</td>
+<td style="text-align:left;">
+20,344 (23.4%)
+</td>
+<td style="text-align:left;">
+3,760 (4.3%)
+</td>
+<td style="text-align:left;">
+2,385 - 5,194 (2.7% - 6%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female: 45-64
+</td>
+<td style="text-align:left;">
+9,249
+</td>
+<td style="text-align:left;">
+7,316 (79.1%)
+</td>
+<td style="text-align:left;">
+7,041 - 7,598 (76.1% - 82.2%)
+</td>
+<td style="text-align:left;">
+1,596 (17.3%)
+</td>
+<td style="text-align:left;">
+337 (3.6%)
+</td>
+<td style="text-align:left;">
+55 - 612 (0.6% - 6.6%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female: 65-74
+</td>
+<td style="text-align:left;">
+13,276
+</td>
+<td style="text-align:left;">
+10,543 (79.4%)
+</td>
+<td style="text-align:left;">
+10,091 -10,990 (76% - 82.8%)
+</td>
+<td style="text-align:left;">
+2,493 (18.8%)
+</td>
+<td style="text-align:left;">
+240 (1.8%)
+</td>
+<td style="text-align:left;">
+-207 - 692 (-1.6% - 5.2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female: 75-84
+</td>
+<td style="text-align:left;">
+27,790
+</td>
+<td style="text-align:left;">
+19,376 (69.7%)
+</td>
+<td style="text-align:left;">
+17,349 -21,192 (62.4% - 76.3%)
+</td>
+<td style="text-align:left;">
+6,354 (22.9%)
+</td>
+<td style="text-align:left;">
+2,060 (7.4%)
+</td>
+<td style="text-align:left;">
+244 - 4,087 (0.9% - 14.7%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Female: 85+
+</td>
+<td style="text-align:left;">
+51,390
+</td>
+<td style="text-align:left;">
+34,357 (66.9%)
+</td>
+<td style="text-align:left;">
+28,168 -40,915 (54.8% - 79.6%)
+</td>
+<td style="text-align:left;">
+10,988 (21.4%)
+</td>
+<td style="text-align:left;">
+6,045 (11.8%)
+</td>
+<td style="text-align:left;">
+-513 - 12,234 (-1% - 23.8%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male: 45-64
+</td>
+<td style="text-align:left;">
+14,548
+</td>
+<td style="text-align:left;">
+10,806 (74.3%)
+</td>
+<td style="text-align:left;">
+10,369 -11,237 (71.3% - 77.2%)
+</td>
+<td style="text-align:left;">
+3,041 (20.9%)
+</td>
+<td style="text-align:left;">
+701 (4.8%)
+</td>
+<td style="text-align:left;">
+270 - 1,138 (1.9% - 7.8%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male: 65-74
+</td>
+<td style="text-align:left;">
+19,813
+</td>
+<td style="text-align:left;">
+14,845 (74.9%)
+</td>
+<td style="text-align:left;">
+14,332 -15,367 (72.3% - 77.6%)
+</td>
+<td style="text-align:left;">
+4,639 (23.4%)
+</td>
+<td style="text-align:left;">
+329 (1.7%)
+</td>
+<td style="text-align:left;">
+-193 - 842 (-1% - 4.2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male: 75-84
+</td>
+<td style="text-align:left;">
+33,818
+</td>
+<td style="text-align:left;">
+23,399 (69.2%)
+</td>
+<td style="text-align:left;">
+23,026 -23,811 (68.1% - 70.4%)
+</td>
+<td style="text-align:left;">
+9,230 (27.3%)
+</td>
+<td style="text-align:left;">
+1,189 (3.5%)
+</td>
+<td style="text-align:left;">
+777 - 1,562 (2.3% - 4.6%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Male: 85+
+</td>
+<td style="text-align:left;">
+35,553
+</td>
+<td style="text-align:left;">
+24,203 (68.1%)
+</td>
+<td style="text-align:left;">
+21,320 -27,111 (60% - 76.3%)
+</td>
+<td style="text-align:left;">
+9,356 (26.3%)
+</td>
+<td style="text-align:left;">
+1,994 (5.6%)
+</td>
+<td style="text-align:left;">
+-914 - 4,877 (-2.6% - 13.7%)
+</td>
+</tr>
+</tbody>
+</table>
+<p><br />
+</p>
+</div>
+<div id="england-and-wales-younger-age-groups-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
+<h3>England and Wales, younger age groups: Deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<p><br />
+</p>
+<p><img src="Youngerage_update.png" /></p>
+<p>Website updated on 26/06/2020.</p>
+</div>
+
+<div id = "footer">
+  &nbsp
+<p style="text-align:center;">
+<a href = "https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/">
+<img align = “left” class = "imperiallogo" src="MRC-GIDA-logo.png" width="200" height=“100”></a> <a href = "https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/covid-19/"> <img align = “left” class = “imperiallogo" src="ICL-JIDEA-1.png" width="200" height=“100”></a>
+</br>
+</br>
+Website by Alessandra Lochen, Daniel Anderson, Giovanni Forchini, Katharina Hauck, Swapnil Mishra. This is an official product of the Imperial College COVID-19 response team: the WHO Collaborating Centre for Infectious Disease Modelling within the MRC Centre for Global Infectious Disease Analysis, J-IDEA, Imperial College London. 
+</br>
+</a>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
+</p>
+</div>
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
