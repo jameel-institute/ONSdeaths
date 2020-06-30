@@ -221,7 +221,7 @@ write.csv(data,"./CleanedData.csv")
 
 ###########################################
 
-data<-read_xlsx('./data/newest_results.xlsx',sheet='Covid-19 - Weekly registrations' ,col_names = FALSE,range='A5:BC86')
+data<-read_xlsx('./data_dashboard/newest_results.xlsx',sheet='Covid-19 - Weekly registrations' ,col_names = FALSE,range='A5:BC86')
 data<-data[complete.cases(data[,3:8]),]
 data[is.na(data[,1]),1]<-data[is.na(data[,1]),2]
 k<-(1:nrow(data))[data$...1=="E12000001"]
@@ -430,6 +430,7 @@ Over the weeks ending 6 March 2020 to `r s.date`, there were `r as.character(Eng
 \
 
 ```{r, echo=F, warnings = F, message=FALSE, fig.align = 'center'}
+
 library(lubridate)
 
 England_extract <- extract.week("England")
@@ -764,7 +765,7 @@ temp4$allDeaths <- format(temp4$allDeaths, big.mark=",")
 temp4$exptd <- paste0(format(round(temp4$exptd), big.mark=","), "\n(", 
                       format(round(temp4$per.expted, digits = 1), big.mark=","), "%)", 
                       sep = "")
-temp4$exptd_bounds <- paste0(format(round(temp4$exptd.lwr), big.mark=","), " -", 
+temp4$exptd_bounds <- paste0(format(round(temp4$exptd.lwr), big.mark=","), " - ", 
                              format(round(temp4$exptd.upr), big.mark=","), "\n(", 
                              round(temp4$per.expted.lwr, digits = 1),"% - ", 
                              round(temp4$per.expted.upr, digits = 1), "%)", sep = "")
@@ -838,11 +839,4 @@ grid.arrange(
 ![](Youngerage_update.png)
 
 Website updated on `r format(Sys.Date(), "%d/%m/%Y")`.
-
-Website by Daniel Anderson, Giovanni Forchini, Katharina Hauck, Alessandra Lochen, Swapnil Mishra
-
-
-
-
-
 
