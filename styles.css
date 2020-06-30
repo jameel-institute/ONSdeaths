@@ -41,6 +41,11 @@ p {
   padding-left: 2% !important;
 }
 
+.imperiallogo {
+  width: 100%;  
+  height: auto;
+}
+
 .dropdown-toggle {
   padding-right: 10px !important;
   padding-left: 10px !important;
@@ -55,6 +60,11 @@ p {
 .title toc-ignore {
   color: #FFFFFF !important;
   display: none;
+}
+
+.header {
+  padding-top: 40px;
+  background-color: #333;
 }
 
 @media (max-width: 1200px) {
