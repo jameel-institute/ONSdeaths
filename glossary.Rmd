@@ -20,6 +20,3 @@ geometry: margin=1in
 
 **_Excess non-COVID-19 deaths:_** An estimate of the number of deaths that are not due to COVID-19 that are substantially higher or lower than expected all-cause deaths in a week. Given by subtracting registered COVID-19 deaths from the difference between registered and expected all-cause deaths, also allowing for the uncertainty in that expectation.
 
-
-Website updated on `r format(Sys.Date(), "%d/%m/%Y")`.
-

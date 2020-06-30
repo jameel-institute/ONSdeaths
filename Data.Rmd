@@ -28,6 +28,4 @@ To allow time for registration and processing, the figures are provisional and a
 ![ ](./figures/table1.png){width=1250px}
 https://www.ons.gov.uk/peoplepopulationandcommunity/birthsdeathsandmarriages/deaths/bulletins/deathsregisteredweeklyinenglandandwalesprovisional/weekending5june2020 
 
-Website updated on `r format(Sys.Date(), "%d/%m/%Y")`.
-
 

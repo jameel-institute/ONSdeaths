@@ -7,7 +7,9 @@ output:
     df_print: paged
     css: styles.css
     includes:
+      before_body: "header.html"
       after_body: "footer.html"
+      in_header: ganalytics.html
 keep_tex: yes
 geometry: margin=1in
 subtitle: Weekly estimates of expected deaths and excess non-COVID-19 deaths during the pandemic in England and Wales
