@@ -1,6 +1,6 @@
 name: "J-IDEA COVID-19 excess deaths tracker for England and Wales"
 navbar: 
-  title: "J-IDEA COVID-19 excess deaths tracker for England and Wales"
+  title: "<img id=\"logo\"  src=\"logo.jpg\" alt=\"Imperial College Logo\" />"
   left:
     - text: "Report"
       href: index.html
@@ -17,6 +17,7 @@ navbar:
 output: 
   html_document:
     includes:
+      before_body: header.html
       after_body: footer.html
     css: styles.css
    
