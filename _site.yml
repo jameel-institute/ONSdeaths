@@ -1,0 +1,23 @@
+name: "J-IDEA COVID-19 excess deaths tracker for England and Wales"
+navbar: 
+  title: "<img id=\"logo\"  src=\"logo.jpg\" alt=\"Imperial College Logo\" />"
+  left:
+    - text: "Report"
+      href: index.html
+    - text: "Glossary"
+      href: glossary.html
+    - text: "Figures"
+      href: figures.html      
+    - text: "Data"
+      href: Data.html
+    - text: "Statistical Analysis"
+      href: Statistical_analysis.html
+    - text: "References"
+      href: References.html
+output: 
+  html_document:
+    includes:
+      before_body: header.html
+      after_body: footer.html
+    css: styles.css
+   
