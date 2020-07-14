@@ -507,7 +507,7 @@ kable(England_tab) %>%
 
 \
 
-```{r, echo=F, warning=F, fig.height=12, fig.width = 12}
+```{r, echo=F, warning=F, message=FALSE, fig.height=12, fig.width = 12}
 q<-theme(plot.title=element_text(size=16),axis.text=element_text(size=12),axis.title=element_text(size=14))
 
 NorthWest<-producePlot("North.West")+q
@@ -548,6 +548,7 @@ grid.arrange(NorthWest+ theme(legend.position = "none")+ggtitle("North West")+yl
             SouthEast + theme(legend.position = "none")+ggtitle("South East")+ylim(0, 3500), 
              ncol=3,
              bottom=g_legend(London + theme(legend.position="bottom",legend.text=element_text(size=18),legend.title=element_text(size=18))))
+dev.off() -> .
 ```
 ![](./EnglandRegions_update.png)
 
@@ -712,6 +713,7 @@ grid.arrange(p.all.85 + theme(legend.position = "none")+ggtitle("All 85+ yrs"),
              p.M.45.64+ theme(legend.position = "none")+ggtitle("Male 45-64 yrs"),
              ncol=3,
              bottom=g_legend(p.All.45.64 + theme(legend.position="bottom",legend.text=element_text(size=18),legend.title=element_text(size=18))))
+dev.off() -> .
 ```
 ![](./Olderage_update.png)
 
@@ -837,6 +839,7 @@ grid.arrange(
              p.M.0.1+ theme(legend.position = "none")+ggtitle("Male <1 yrs"),
              ncol=3,
              bottom=g_legend(p.All.45.64 + theme(legend.position="bottom",legend.text=element_text(size=18),legend.title=element_text(size=18))))
+dev.off() -> .
 ```
 ![](Youngerage_update.png)
 
