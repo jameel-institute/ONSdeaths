@@ -25,6 +25,14 @@
 <link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
 <script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167425836-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-171300024-1');
+</script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -271,7 +279,7 @@ $(document).ready(function () {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">J-IDEA COVID-19 excess deaths tracker for England and Wales</a>
+      <a class="navbar-brand" href="index.html"><img id="logo"  src="logo.jpg" alt="Imperial College Logo" /></a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -300,6 +308,14 @@ $(document).ready(function () {
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
+<!DOCTYPE HTML>
+<div id="header">
+</br>
+<p style="text-align:center;">
+   <p><strong>J-IDEA COVID-19 excess deaths tracker for England and Wales</strong>
+</p>
+</div>
+<hr>
 
 <div class="fluid-row" id="header">
 
@@ -320,8 +336,8 @@ $(document).ready(function () {
 <h3>Introduction</h3>
 <p><br />
 </p>
-<p>This website provides weekly updates of deaths in England and Wales using publicly available data on the provisional number of deaths registered in the past week from the Office of National Statistics (<a href="Data.html">see Data</a>). We show the number of registered all-cause deaths, and the deaths registered as COVID-19 deaths as provided by the ONS for every week beginning in March 2020. We compare the all-cause deaths with the number of deaths we would have expected to see being registered in this week had there been no pandemic, based on numbers of deaths in corresponding weeks of previous years, and determine the number of excess deaths as the difference. We then compare the excess deaths with the recorded COVID-19 deaths, which gives an estimate of excess deaths that were not associated with COVID-19 according to official registers. These estimates of excess non-COVID-19 deaths inform whether the pandemic led to unexpected deaths that were higher (or lower) than what we would have expected in that week (<a href="figures.html">Figure 1</a>). It is possible that all or almost all excess deaths comprise of registered COVID-19 deaths, in that situation there are no excess non-COVID-19 deaths (<a href="figures.html">Figure 2</a>). It is also possible that excess non-COVID-19 deaths are actually lower than expected deaths, once registered COVID-19 deaths are subtracted from excess deaths (<a href="figures.html">Figure 3</a>). We also present total cumulative deaths across all categories. This is the sum of registered all-cause deaths, COVID-19 deaths, expected deaths and excess non-COVID-19 deaths from the week ending 6 March 2020 to 12 June 2020.</p>
-<p>It is not straightforward to estimate expected deaths, because the number of deaths in the absence of the pandemic is inherently unobservable. We forecast the expected number of deaths in each week from March 2020 onwards using time series methods and data on deaths going back to 2010. We consider the uncertainty around our estimates using confidence intervals. For further details, see the <a href="Statistical_analysis.html">Methods section</a>.</p>
+<p>This website provides weekly updates of deaths in England and Wales using publicly available data on the provisional number of deaths registered in the past week from the Office of National Statistics (<a href="Data.html">see Data</a>). We show the number of registered all-cause deaths, and the deaths registered as COVID-19 deaths as provided by the ONS for every week beginning in March 2020. We compare the all-cause deaths with the number of deaths we would have expected to see being registered in this week had there been no pandemic, based on numbers of deaths in corresponding weeks of previous years, and determine the number of excess deaths as the difference. We then compare the excess deaths with the recorded COVID-19 deaths, which gives an estimate of excess deaths that were not associated with COVID-19 according to official registers. These estimates of excess non-COVID-19 deaths inform whether the pandemic led to unexpected deaths that were higher (or lower) than what we would have expected in that week (<a href="figures.html">Figure 1</a>). It is possible that all or almost all excess deaths comprise of registered COVID-19 deaths, in that situation there are no excess non-COVID-19 deaths (<a href="figures.html">Figure 2</a>). It is also possible that excess non-COVID-19 deaths are actually lower than expected deaths, once registered COVID-19 deaths are subtracted from excess deaths (<a href="figures.html">Figure 3</a>). We also present total cumulative deaths across all categories. This is the sum of registered all-cause deaths, COVID-19 deaths, expected deaths and excess non-COVID-19 deaths from the week ending 6 March 2020 to 09 October 2020.</p>
+<p>It is not straightforward to estimate expected deaths, because the number of deaths in the absence of the pandemic is inherently unobservable. We forecast the expected number of deaths in each week from March 2020 onwards using time series methods and data on deaths going back to 2010. We consider the uncertainty around our estimates using prediction intervals. For further details, see the <a href="Statistical_analysis.html">Methods section</a>.</p>
 <p><br />
 </p>
 </div>
@@ -335,28 +351,52 @@ $(document).ready(function () {
 <p><br />
 </p>
 </div>
-<div id="limitations" class="section level3">
-<h3>Limitations</h3>
-<p><br />
-</p>
-<p>The pandemic is ongoing, and we only estimate excess deaths until the week ending in 12 June 2020. It is possible that the pandemic will impact on deaths in months and even years to come, including due to delays in cancer treatment resulting in treatable cancer becoming untreatable and causing death occurring months or years later. There is inherent uncertainty in forecasting deaths. We find that our model reliably predicts reported deaths in the pre-pandemic period between July 2019 and February 2020 based on data going back to 2010 (<a href="https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-18-COVID19-Report-28.pdf">Report 28</a>). However, there is no guarantee that a model that fits the pre-pandemic time period is forecasting well for the pandemic period that saw unprecedented changes in hospital care provision, patient behaviour, and many other factors including possibly the reporting of deaths itself. The uncertainty around our forecasts may take account of some but not all of this uncertainty. Moreover, we cannot take account of irregularities in the reporting of COVID-19 and non-COVID-19 deaths. For further limitations see (<a href="https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-18-COVID19-Report-28.pdf">Report 28</a>).</p>
-<p><br />
-</p>
-</div>
 <div id="findings" class="section level3">
 <h3>Findings</h3>
 <p><br />
 </p>
 </div>
-<div id="england-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
-<h3>England: Deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<div id="england-deaths-from-week-ending-06032020-to-week-ending-09102020" class="section level3">
+<h3>England: Deaths from week ending 06/03/2020 to week ending 09/10/2020</h3>
 <p><br />
 </p>
 <p><img src="England_update.png" /></p>
-<p>In the week ending 12 June 2020, there were 9391 registered all-cause deaths in England. These comprise of 1057 deaths registered due to COVID-19 and 8334 deaths registered due to other conditions.</p>
-<p>Over the weeks ending 6 March 2020 to 12 June 2020, there were 198794 cumulative registered all-cause deaths in England. These comprise of 45793 deaths due to COVID-19 and 153001 deaths due to other conditions. We would have expected 145365 (95% CI 142938 – 147936) all-cause deaths for that period. This implies that total excess deaths were between 50858 – 55856, and comprised of 7636 (95% CI 5065 – 10063) non-COVID-19 excess deaths.</p>
+<p>In the week ending 09 October 2020, there were 9308 registered all-cause deaths in England. These comprise of 401 deaths registered due to COVID-19 and 8907 deaths registered due to other conditions.</p>
+<p>Over the weeks ending 6 March 2020 to 09 October 2020, there were 345102 cumulative registered all-cause deaths in England. These comprise of 50309 deaths due to COVID-19 and 294793 deaths due to other conditions.</p>
 <p><br />
 </p>
+</div>
+<div id="english-regions-deaths-from-week-ending-06032020-to-week-ending-09102020" class="section level3">
+<h3>English regions: Deaths from week ending 06/03/2020 to week ending 09/10/2020</h3>
+<p><br />
+</p>
+<p><img src="EnglandRegions_update.png" /></p>
+<p><br />
+</p>
+</div>
+<div id="wales-deaths-from-week-ending-06032020-to-week-ending-09102020" class="section level3">
+<h3>Wales: Deaths from week ending 06/03/2020 to week ending 09/10/2020</h3>
+<p><br />
+</p>
+<p><img src="Wales_update.png" /></p>
+<p>In the week ending 09 October 2020, there were 638 registered all-cause deaths in Wales. These comprise of 37 deaths due to COVID-19 and 601 deaths due to other conditions.</p>
+<p>Over the weeks ending 6 March 2020 to 09 October 2020, there were 21735 cumulative registered all-cause deaths in Wales. These comprise of 2641 deaths due to COVID-19 and 19094 deaths due to other conditions.</p>
+<p><br />
+</p>
+</div>
+<div id="england-and-wales-older-age-groups-deaths-from-week-ending-06032020-to-week-ending-09102020" class="section level3">
+<h3>England and Wales, older age groups: Deaths from week ending 06/03/2020 to week ending 09/10/2020</h3>
+<p><br />
+</p>
+<p><img src="Olderage_update.png" /></p>
+<p><br />
+</p>
+</div>
+<div id="england-and-wales-younger-age-groups-deaths-from-week-ending-06032020-to-week-ending-09102020" class="section level3">
+<h3>England and Wales, younger age groups: Deaths from week ending 06/03/2020 to week ending 09/10/2020</h3>
+<p><br />
+</p>
+<p><img src="Youngerage_update.png" /></p>
 </div>
 <div id="england-weekly-deaths-since-06032020" class="section level3">
 <h3>England: Weekly deaths since 06/03/2020</h3>
@@ -734,31 +774,404 @@ Excess non-COVID-19 95% prediction interval (%)
 -2,258 - 819 (-24% - 8.7%)
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+2020-06-19
+</td>
+<td style="text-align:left;">
+8,716
+</td>
+<td style="text-align:left;">
+9,071 (104.1%)
+</td>
+<td style="text-align:left;">
+7,532 - 10,609 (86.4% - 121.7%)
+</td>
+<td style="text-align:left;">
+744 (8.5%)
+</td>
+<td style="text-align:left;">
+-1,099 (-12.6%)
+</td>
+<td style="text-align:left;">
+-2,637 - 440 (-30.3% - 5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-06-26
+</td>
+<td style="text-align:left;">
+8,414
+</td>
+<td style="text-align:left;">
+8,998 (106.9%)
+</td>
+<td style="text-align:left;">
+7,460 - 10,537 (88.7% - 125.2%)
+</td>
+<td style="text-align:left;">
+574 (6.8%)
+</td>
+<td style="text-align:left;">
+-1,158 (-13.8%)
+</td>
+<td style="text-align:left;">
+-2,697 - 380 (-32.1% - 4.5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-07-03
+</td>
+<td style="text-align:left;">
+8,542
+</td>
+<td style="text-align:left;">
+8,853 (103.6%)
+</td>
+<td style="text-align:left;">
+7,315 - 10,392 (85.6% - 121.7%)
+</td>
+<td style="text-align:left;">
+497 (5.8%)
+</td>
+<td style="text-align:left;">
+-808 (-9.5%)
+</td>
+<td style="text-align:left;">
+-2,347 - 730 (-27.5% - 8.5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-07-10
+</td>
+<td style="text-align:left;">
+8,103
+</td>
+<td style="text-align:left;">
+8,904 (109.9%)
+</td>
+<td style="text-align:left;">
+7,365 - 10,442 (90.9% - 128.9%)
+</td>
+<td style="text-align:left;">
+344 (4.2%)
+</td>
+<td style="text-align:left;">
+-1,145 (-14.1%)
+</td>
+<td style="text-align:left;">
+-2,683 - 394 (-33.1% - 4.9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-07-17
+</td>
+<td style="text-align:left;">
+8,262
+</td>
+<td style="text-align:left;">
+8,821 (106.8%)
+</td>
+<td style="text-align:left;">
+7,282 - 10,359 (88.1% - 125.4%)
+</td>
+<td style="text-align:left;">
+284 (3.4%)
+</td>
+<td style="text-align:left;">
+-843 (-10.2%)
+</td>
+<td style="text-align:left;">
+-2,381 - 696 (-28.8% - 8.4%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-07-24
+</td>
+<td style="text-align:left;">
+8,317
+</td>
+<td style="text-align:left;">
+8,803 (105.8%)
+</td>
+<td style="text-align:left;">
+7,264 - 10,341 (87.3% - 124.3%)
+</td>
+<td style="text-align:left;">
+209 (2.5%)
+</td>
+<td style="text-align:left;">
+-695 (-8.4%)
+</td>
+<td style="text-align:left;">
+-2,233 - 844 (-26.8% - 10.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-07-31
+</td>
+<td style="text-align:left;">
+8,404
+</td>
+<td style="text-align:left;">
+8,792 (104.6%)
+</td>
+<td style="text-align:left;">
+7,253 - 10,330 (86.3% - 122.9%)
+</td>
+<td style="text-align:left;">
+183 (2.2%)
+</td>
+<td style="text-align:left;">
+-571 (-6.8%)
+</td>
+<td style="text-align:left;">
+-2,109 - 968 (-25.1% - 11.5%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-08-07
+</td>
+<td style="text-align:left;">
+8,365
+</td>
+<td style="text-align:left;">
+8,836 (105.6%)
+</td>
+<td style="text-align:left;">
+7,297 - 10,374 (87.2% - 124%)
+</td>
+<td style="text-align:left;">
+128 (1.5%)
+</td>
+<td style="text-align:left;">
+-599 (-7.2%)
+</td>
+<td style="text-align:left;">
+-2,137 - 940 (-25.6% - 11.2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-08-14
+</td>
+<td style="text-align:left;">
+8,767
+</td>
+<td style="text-align:left;">
+8,857 (101.0%)
+</td>
+<td style="text-align:left;">
+7,318 - 10,395 (83.5% - 118.6%)
+</td>
+<td style="text-align:left;">
+125 (1.4%)
+</td>
+<td style="text-align:left;">
+-215 (-2.5%)
+</td>
+<td style="text-align:left;">
+-1,753 - 1,324 (-20% - 15.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-08-21
+</td>
+<td style="text-align:left;">
+9,021
+</td>
+<td style="text-align:left;">
+8,435 (93.5%)
+</td>
+<td style="text-align:left;">
+6,897 - 9,974 (76.5% - 110.6%)
+</td>
+<td style="text-align:left;">
+126 (1.4%)
+</td>
+<td style="text-align:left;">
+460 (5.1%)
+</td>
+<td style="text-align:left;">
+-1,079 - 1,998 (-12% - 22.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-08-28
+</td>
+<td style="text-align:left;">
+8,425
+</td>
+<td style="text-align:left;">
+8,507 (101.0%)
+</td>
+<td style="text-align:left;">
+6,969 - 10,046 (82.7% - 119.2%)
+</td>
+<td style="text-align:left;">
+97 (1.2%)
+</td>
+<td style="text-align:left;">
+-179 (-2.1%)
+</td>
+<td style="text-align:left;">
+-1,718 - 1,359 (-20.4% - 16.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-09-04
+</td>
+<td style="text-align:left;">
+7,232
+</td>
+<td style="text-align:left;">
+9,070 (125.4%)
+</td>
+<td style="text-align:left;">
+7,531 - 10,608 (104.1% - 146.7%)
+</td>
+<td style="text-align:left;">
+74 (1%)
+</td>
+<td style="text-align:left;">
+-1,912 (-26.4%)
+</td>
+<td style="text-align:left;">
+-3,450 - -373 (-47.7% - -5.2%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-09-11
+</td>
+<td style="text-align:left;">
+9,215
+</td>
+<td style="text-align:left;">
+9,011 (97.8%)
+</td>
+<td style="text-align:left;">
+7,473 - 10,550 (81.1% - 114.5%)
+</td>
+<td style="text-align:left;">
+97 (1.1%)
+</td>
+<td style="text-align:left;">
+107 (1.2%)
+</td>
+<td style="text-align:left;">
+-1,432 - 1,645 (-15.5% - 17.9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-09-18
+</td>
+<td style="text-align:left;">
+8,955
+</td>
+<td style="text-align:left;">
+9,093 (101.5%)
+</td>
+<td style="text-align:left;">
+7,554 - 10,631 (84.4% - 118.7%)
+</td>
+<td style="text-align:left;">
+134 (1.5%)
+</td>
+<td style="text-align:left;">
+-272 (-3%)
+</td>
+<td style="text-align:left;">
+-1,810 - 1,267 (-20.2% - 14.1%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-09-25
+</td>
+<td style="text-align:left;">
+9,005
+</td>
+<td style="text-align:left;">
+9,172 (101.9%)
+</td>
+<td style="text-align:left;">
+7,634 - 10,711 (84.8% - 118.9%)
+</td>
+<td style="text-align:left;">
+203 (2.3%)
+</td>
+<td style="text-align:left;">
+-370 (-4.1%)
+</td>
+<td style="text-align:left;">
+-1,909 - 1,168 (-21.2% - 13%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-10-02
+</td>
+<td style="text-align:left;">
+9,257
+</td>
+<td style="text-align:left;">
+9,305 (100.5%)
+</td>
+<td style="text-align:left;">
+7,766 - 10,843 (83.9% - 117.1%)
+</td>
+<td style="text-align:left;">
+296 (3.2%)
+</td>
+<td style="text-align:left;">
+-344 (-3.7%)
+</td>
+<td style="text-align:left;">
+-1,882 - 1,195 (-20.3% - 12.9%)
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2020-10-09
+</td>
+<td style="text-align:left;">
+9,308
+</td>
+<td style="text-align:left;">
+9,399 (101.0%)
+</td>
+<td style="text-align:left;">
+7,861 - 10,938 (84.5% - 117.5%)
+</td>
+<td style="text-align:left;">
+401 (4.3%)
+</td>
+<td style="text-align:left;">
+-492 (-5.3%)
+</td>
+<td style="text-align:left;">
+-2,031 - 1,046 (-21.8% - 11.2%)
+</td>
+</tr>
 </tbody>
 </table>
 <p><br />
 </p>
 </div>
-<div id="english-regions-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
-<h3>English regions: Deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
-<p><br />
-</p>
-<p><img src="EnglandRegions_update.png" /></p>
-<p><br />
-</p>
-</div>
-<div id="wales-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
-<h3>Wales: Deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
-<p><br />
-</p>
-<p><img src="Wales_update.png" /></p>
-<p>In the week ending 12 June 2020, there were 574 registered all-cause deaths in Wales. These comprise of 57 deaths due to COVID-19 and 517 deaths due to other conditions.</p>
-<p>Over the weeks ending 6 March 2020 to 12 June 2020, there were 11852 cumulative registered all-cause deaths in Wales. These comprise of 2351 deaths due to COVID-19 and 9501 deaths due to other conditions.</p>
-<p><br />
-</p>
-</div>
-<div id="england-and-wales-cumulative-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
-<h3>England and Wales: Cumulative deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<div id="england-and-wales-cumulative-deaths-from-week-ending-06032020-to-week-ending-09102020" class="section level3">
+<h3>England and Wales: Cumulative deaths from week ending 06/03/2020 to week ending 09/10/2020</h3>
 <p><br />
 </p>
 <table class="table table-striped table-condensed" style="width: auto !important; ">
@@ -774,7 +1187,7 @@ Reported all-cause deaths
 Expected (%)
 </th>
 <th style="text-align:left;">
-Expected 95% confidence interval (%)
+Expected 95% prediction interval (%)
 </th>
 <th style="text-align:left;">
 COVID-19 (%)
@@ -783,7 +1196,7 @@ COVID-19 (%)
 Excess non-COVID-19 (%)
 </th>
 <th style="text-align:left;">
-Excess non-COVID-19 95% confidence interval (%)
+Excess non-COVID-19 95% prediction interval (%)
 </th>
 </tr>
 </thead>
@@ -793,22 +1206,22 @@ Excess non-COVID-19 95% confidence interval (%)
 England
 </td>
 <td style="text-align:left;">
-198,794
+345,102
 </td>
 <td style="text-align:left;">
-145,365 (73.1%)
+297,329 (86.2%)
 </td>
 <td style="text-align:left;">
-142,938 -147,936 (71.9% - 74.4%)
+292,944 -301,750 (84.9% - 87.4%)
 </td>
 <td style="text-align:left;">
-45,793 (23%)
+50,309 (14.6%)
 </td>
 <td style="text-align:left;">
-7,636 (3.8%)
+-2,536 (-0.7%)
 </td>
 <td style="text-align:left;">
-5,065 - 10,063 (2.5% - 5.1%)
+-6,957 - 1,849 (-2% - 0.5%)
 </td>
 </tr>
 <tr>
@@ -816,22 +1229,22 @@ England
 North West
 </td>
 <td style="text-align:left;">
-29,091
+50,076
 </td>
 <td style="text-align:left;">
-20,339 (69.9%)
+41,612 (83.1%)
 </td>
 <td style="text-align:left;">
-18,441 - 22,302 (63.4% - 76.7%)
+36,648 - 46,668 (73.2% - 93.2%)
 </td>
 <td style="text-align:left;">
-7,206 (24.8%)
+8,274 (16.5%)
 </td>
 <td style="text-align:left;">
-1,546 (5.3%)
+190 (0.4%)
 </td>
 <td style="text-align:left;">
--417 - 3,444 (-1.4% - 11.8%)
+-4,866 - 5,154 (-9.7% - 10.3%)
 </td>
 </tr>
 <tr>
@@ -839,22 +1252,22 @@ North West
 North East
 </td>
 <td style="text-align:left;">
-10,957
+19,322
 </td>
 <td style="text-align:left;">
-7,666 (70.0%)
+15,789 (81.7%)
 </td>
 <td style="text-align:left;">
-6,896 - 8,430 (62.9% - 76.9%)
+13,955 - 17,714 (72.2% - 91.7%)
 </td>
 <td style="text-align:left;">
-2,694 (24.6%)
+2,954 (15.3%)
 </td>
 <td style="text-align:left;">
-597 (5.4%)
+579 (3%)
 </td>
 <td style="text-align:left;">
--167 - 1,367 (-1.5% - 12.5%)
+-1,346 - 2,413 (-7% - 12.5%)
 </td>
 </tr>
 <tr>
@@ -862,22 +1275,22 @@ North East
 Yorkshire and The Humber
 </td>
 <td style="text-align:left;">
-20,266
+35,537
 </td>
 <td style="text-align:left;">
-14,780 (72.9%)
+30,277 (85.2%)
 </td>
 <td style="text-align:left;">
-13,532 - 16,142 (66.8% - 79.6%)
+27,051 - 33,678 (76.1% - 94.8%)
 </td>
 <td style="text-align:left;">
-4,421 (21.8%)
+5,001 (14.1%)
 </td>
 <td style="text-align:left;">
-1,065 (5.3%)
+259 (0.7%)
 </td>
 <td style="text-align:left;">
--297 - 2,313 (-1.5% - 11.4%)
+-3,142 - 3,485 (-8.8% - 9.8%)
 </td>
 </tr>
 <tr>
@@ -885,22 +1298,22 @@ Yorkshire and The Humber
 West Midlands
 </td>
 <td style="text-align:left;">
-22,806
+39,203
 </td>
 <td style="text-align:left;">
-15,721 (68.9%)
+32,113 (81.9%)
 </td>
 <td style="text-align:left;">
-14,393 - 17,005 (63.1% - 74.6%)
+28,857 - 35,505 (73.6% - 90.6%)
 </td>
 <td style="text-align:left;">
-5,381 (23.6%)
+5,877 (15%)
 </td>
 <td style="text-align:left;">
-1,704 (7.5%)
+1,213 (3.1%)
 </td>
 <td style="text-align:left;">
-420 - 3,032 (1.8% - 13.3%)
+-2,179 - 4,469 (-5.6% - 11.4%)
 </td>
 </tr>
 <tr>
@@ -908,22 +1321,22 @@ West Midlands
 East Midlands
 </td>
 <td style="text-align:left;">
-17,352
+30,912
 </td>
 <td style="text-align:left;">
-13,042 (75.2%)
+26,555 (85.9%)
 </td>
 <td style="text-align:left;">
-11,900 - 14,295 (68.6% - 82.4%)
+23,448 - 29,880 (75.9% - 96.7%)
 </td>
 <td style="text-align:left;">
-3,536 (20.4%)
+4,036 (13.1%)
 </td>
 <td style="text-align:left;">
-774 (4.5%)
+321 (1%)
 </td>
 <td style="text-align:left;">
--479 - 1,916 (-2.8% - 11%)
+-3,004 - 3,428 (-9.7% - 11.1%)
 </td>
 </tr>
 <tr>
@@ -931,22 +1344,22 @@ East Midlands
 East
 </td>
 <td style="text-align:left;">
-22,568
+38,994
 </td>
 <td style="text-align:left;">
-16,249 (72.0%)
+33,181 (85.1%)
 </td>
 <td style="text-align:left;">
-14,772 - 17,726 (65.5% - 78.5%)
+29,559 - 36,933 (75.8% - 94.7%)
 </td>
 <td style="text-align:left;">
-4,725 (20.9%)
+5,160 (13.2%)
 </td>
 <td style="text-align:left;">
-1,594 (7.1%)
+653 (1.7%)
 </td>
 <td style="text-align:left;">
-117 - 3,071 (0.5% - 13.6%)
+-3,099 - 4,275 (-7.9% - 11%)
 </td>
 </tr>
 <tr>
@@ -954,22 +1367,22 @@ East
 South West
 </td>
 <td style="text-align:left;">
-20,010
+36,631
 </td>
 <td style="text-align:left;">
-15,960 (79.8%)
+32,505 (88.7%)
 </td>
 <td style="text-align:left;">
-14,390 - 17,511 (71.9% - 87.5%)
+28,328 - 36,408 (77.3% - 99.4%)
 </td>
 <td style="text-align:left;">
-2,786 (13.9%)
+2,928 (8%)
 </td>
 <td style="text-align:left;">
-1,264 (6.3%)
+1,198 (3.3%)
 </td>
 <td style="text-align:left;">
--287 - 2,834 (-1.4% - 14.2%)
+-2,705 - 5,375 (-7.4% - 14.7%)
 </td>
 </tr>
 <tr>
@@ -977,22 +1390,22 @@ South West
 London
 </td>
 <td style="text-align:left;">
-23,889
+38,250
 </td>
 <td style="text-align:left;">
-13,700 (57.4%)
+28,050 (73.3%)
 </td>
 <td style="text-align:left;">
-12,571 - 14,852 (52.6% - 62.2%)
+25,181 - 30,912 (65.8% - 80.8%)
 </td>
 <td style="text-align:left;">
-8,289 (34.7%)
+8,650 (22.6%)
 </td>
 <td style="text-align:left;">
-1,900 (8%)
+1,550 (4.1%)
 </td>
 <td style="text-align:left;">
-748 - 3,029 (3.1% - 12.7%)
+-1,312 - 4,419 (-3.4% - 11.6%)
 </td>
 </tr>
 <tr>
@@ -1000,22 +1413,22 @@ London
 South East
 </td>
 <td style="text-align:left;">
-31,855
+56,177
 </td>
 <td style="text-align:left;">
-22,959 (72.1%)
+46,730 (83.2%)
 </td>
 <td style="text-align:left;">
-20,998 - 24,959 (65.9% - 78.4%)
+41,637 - 51,626 (74.1% - 91.9%)
 </td>
 <td style="text-align:left;">
-6,755 (21.2%)
+7,429 (13.2%)
 </td>
 <td style="text-align:left;">
-2,141 (6.7%)
+2,018 (3.6%)
 </td>
 <td style="text-align:left;">
-141 - 4,102 (0.4% - 12.9%)
+-2,878 - 7,111 (-5.1% - 12.7%)
 </td>
 </tr>
 <tr>
@@ -1023,22 +1436,22 @@ South East
 Wales
 </td>
 <td style="text-align:left;">
-11,852
+21,735
 </td>
 <td style="text-align:left;">
-9,565 (80.7%)
+19,356 (89.1%)
 </td>
 <td style="text-align:left;">
-8,551 - 10,544 (72.2% - 89%)
+16,549 - 22,168 (76.1% - 102%)
 </td>
 <td style="text-align:left;">
-2,351 (19.8%)
+2,641 (12.2%)
 </td>
 <td style="text-align:left;">
--64 (-0.5%)
+-262 (-1.2%)
 </td>
 <td style="text-align:left;">
--1,043 - 950 (-8.8% - 8%)
+-3,074 - 2,545 (-14.1% - 11.7%)
 </td>
 </tr>
 </tbody>
@@ -1046,16 +1459,8 @@ Wales
 <p><br />
 </p>
 </div>
-<div id="england-and-wales-older-age-groups-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
-<h3>England and Wales, older age groups: Deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
-<p><br />
-</p>
-<p><img src="Olderage_update.png" /></p>
-<p><br />
-</p>
-</div>
-<div id="england-and-wales-older-age-groups-cumulative-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
-<h3>England and Wales, older age groups: Cumulative deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<div id="england-and-wales-older-age-groups-cumulative-deaths-from-week-ending-06032020-to-week-ending-09102020" class="section level3">
+<h3>England and Wales, older age groups: Cumulative deaths from week ending 06/03/2020 to week ending 09/10/2020</h3>
 <p><br />
 </p>
 <table class="table table-striped table-condensed" style="width: auto !important; ">
@@ -1071,7 +1476,7 @@ Reported all-cause deaths
 Expected (%)
 </th>
 <th style="text-align:left;">
-Expected 95% confidence interval (%)
+Expected 95% prediction interval (%)
 </th>
 <th style="text-align:left;">
 COVID-19 (%)
@@ -1080,7 +1485,7 @@ COVID-19 (%)
 Excess non-COVID-19 (%)
 </th>
 <th style="text-align:left;">
-Excess non-COVID-19 95% confidence interval (%)
+Excess non-COVID-19 95% prediction interval (%)
 </th>
 </tr>
 </thead>
@@ -1090,22 +1495,22 @@ Excess non-COVID-19 95% confidence interval (%)
 All: 45-64
 </td>
 <td style="text-align:left;">
-23,797
+44,075
 </td>
 <td style="text-align:left;">
-18,092 (76.0%)
+37,649 (85.4%)
 </td>
 <td style="text-align:left;">
-17,471 -18,726 (73.4% - 78.7%)
+36,185 - 39,096 (82.1% - 88.7%)
 </td>
 <td style="text-align:left;">
-4,637 (19.5%)
+5,090 (11.5%)
 </td>
 <td style="text-align:left;">
-1,068 (4.5%)
+1,336 (3%)
 </td>
 <td style="text-align:left;">
-434 - 1,689 (1.8% - 7.1%)
+-111 - 2,800 (-0.3% - 6.4%)
 </td>
 </tr>
 <tr>
@@ -1113,22 +1518,22 @@ All: 45-64
 All: 65-74
 </td>
 <td style="text-align:left;">
-33,089
+59,986
 </td>
 <td style="text-align:left;">
-25,384 (76.7%)
+52,495 (87.5%)
 </td>
 <td style="text-align:left;">
-24,473 -26,370 (74% - 79.7%)
+50,294 - 54,707 (83.8% - 91.2%)
 </td>
 <td style="text-align:left;">
-7,132 (21.6%)
+7,872 (13.1%)
 </td>
 <td style="text-align:left;">
-573 (1.7%)
+-381 (-0.6%)
 </td>
 <td style="text-align:left;">
--413 - 1,484 (-1.2% - 4.5%)
+-2,593 - 1,820 (-4.3% - 3%)
 </td>
 </tr>
 <tr>
@@ -1136,22 +1541,22 @@ All: 65-74
 All: 75-84
 </td>
 <td style="text-align:left;">
-61,608
+106,646
 </td>
 <td style="text-align:left;">
-42,287 (68.6%)
+86,035 (80.7%)
 </td>
 <td style="text-align:left;">
-38,713 -45,685 (62.8% - 74.2%)
+76,550 - 94,920 (71.8% - 89%)
 </td>
 <td style="text-align:left;">
-15,584 (25.3%)
+17,177 (16.1%)
 </td>
 <td style="text-align:left;">
-3,737 (6.1%)
+3,434 (3.2%)
 </td>
 <td style="text-align:left;">
-339 - 7,311 (0.6% - 11.9%)
+-5,451 - 12,919 (-5.1% - 12.1%)
 </td>
 </tr>
 <tr>
@@ -1159,22 +1564,22 @@ All: 75-84
 All: 85+
 </td>
 <td style="text-align:left;">
-86,943
+145,356
 </td>
 <td style="text-align:left;">
-62,839 (72.3%)
+127,182 (87.5%)
 </td>
 <td style="text-align:left;">
-61,405 -64,214 (70.6% - 73.9%)
+124,676 - 129,681 (85.8% - 89.2%)
 </td>
 <td style="text-align:left;">
-20,344 (23.4%)
+22,309 (15.3%)
 </td>
 <td style="text-align:left;">
-3,760 (4.3%)
+-4,135 (-2.8%)
 </td>
 <td style="text-align:left;">
-2,385 - 5,194 (2.7% - 6%)
+-6,634 - -1,629 (-4.6% - -1.1%)
 </td>
 </tr>
 <tr>
@@ -1182,22 +1587,22 @@ All: 85+
 Female: 45-64
 </td>
 <td style="text-align:left;">
-9,249
+17,258
 </td>
 <td style="text-align:left;">
-7,316 (79.1%)
+15,227 (88.2%)
 </td>
 <td style="text-align:left;">
-7,041 - 7,598 (76.1% - 82.2%)
+14,627 - 15,849 (84.8% - 91.8%)
 </td>
 <td style="text-align:left;">
-1,596 (17.3%)
+1,751 (10.1%)
 </td>
 <td style="text-align:left;">
-337 (3.6%)
+280 (1.6%)
 </td>
 <td style="text-align:left;">
-55 - 612 (0.6% - 6.6%)
+-342 - 880 (-2% - 5.1%)
 </td>
 </tr>
 <tr>
@@ -1205,22 +1610,22 @@ Female: 45-64
 Female: 65-74
 </td>
 <td style="text-align:left;">
-13,276
+24,491
 </td>
 <td style="text-align:left;">
-10,543 (79.4%)
+21,711 (88.6%)
 </td>
 <td style="text-align:left;">
-10,091 -10,990 (76% - 82.8%)
+20,653 - 22,718 (84.3% - 92.8%)
 </td>
 <td style="text-align:left;">
-2,493 (18.8%)
+2,785 (11.4%)
 </td>
 <td style="text-align:left;">
-240 (1.8%)
+-5 (0%)
 </td>
 <td style="text-align:left;">
--207 - 692 (-1.6% - 5.2%)
+-1,012 - 1,053 (-4.1% - 4.3%)
 </td>
 </tr>
 <tr>
@@ -1228,22 +1633,22 @@ Female: 65-74
 Female: 75-84
 </td>
 <td style="text-align:left;">
-27,790
+48,492
 </td>
 <td style="text-align:left;">
-19,376 (69.7%)
+39,217 (80.9%)
 </td>
 <td style="text-align:left;">
-17,349 -21,192 (62.4% - 76.3%)
+33,892 - 44,248 (69.9% - 91.2%)
 </td>
 <td style="text-align:left;">
-6,354 (22.9%)
+6,980 (14.4%)
 </td>
 <td style="text-align:left;">
-2,060 (7.4%)
+2,295 (4.7%)
 </td>
 <td style="text-align:left;">
-244 - 4,087 (0.9% - 14.7%)
+-2,736 - 7,620 (-5.6% - 15.7%)
 </td>
 </tr>
 <tr>
@@ -1251,22 +1656,22 @@ Female: 75-84
 Female: 85+
 </td>
 <td style="text-align:left;">
-51,390
+86,447
 </td>
 <td style="text-align:left;">
-34,357 (66.9%)
+68,983 (79.8%)
 </td>
 <td style="text-align:left;">
-28,168 -40,915 (54.8% - 79.6%)
+50,883 - 87,768 (58.9% - 101.5%)
 </td>
 <td style="text-align:left;">
-10,988 (21.4%)
+12,072 (14%)
 </td>
 <td style="text-align:left;">
-6,045 (11.8%)
+5,392 (6.2%)
 </td>
 <td style="text-align:left;">
--513 - 12,234 (-1% - 23.8%)
+-13,393 - 23,492 (-15.5% - 27.2%)
 </td>
 </tr>
 <tr>
@@ -1274,22 +1679,22 @@ Female: 85+
 Male: 45-64
 </td>
 <td style="text-align:left;">
-14,548
+26,817
 </td>
 <td style="text-align:left;">
-10,806 (74.3%)
+22,511 (83.9%)
 </td>
 <td style="text-align:left;">
-10,369 -11,237 (71.3% - 77.2%)
+21,509 - 23,560 (80.2% - 87.9%)
 </td>
 <td style="text-align:left;">
-3,041 (20.9%)
+3,339 (12.5%)
 </td>
 <td style="text-align:left;">
-701 (4.8%)
+967 (3.6%)
 </td>
 <td style="text-align:left;">
-270 - 1,138 (1.9% - 7.8%)
+-82 - 1,969 (-0.3% - 7.3%)
 </td>
 </tr>
 <tr>
@@ -1297,22 +1702,22 @@ Male: 45-64
 Male: 65-74
 </td>
 <td style="text-align:left;">
-19,813
+35,495
 </td>
 <td style="text-align:left;">
-14,845 (74.9%)
+30,801 (86.8%)
 </td>
 <td style="text-align:left;">
-14,332 -15,367 (72.3% - 77.6%)
+29,565 - 32,003 (83.3% - 90.2%)
 </td>
 <td style="text-align:left;">
-4,639 (23.4%)
+5,087 (14.3%)
 </td>
 <td style="text-align:left;">
-329 (1.7%)
+-393 (-1.1%)
 </td>
 <td style="text-align:left;">
--193 - 842 (-1% - 4.2%)
+-1,595 - 843 (-4.5% - 2.4%)
 </td>
 </tr>
 <tr>
@@ -1320,22 +1725,22 @@ Male: 65-74
 Male: 75-84
 </td>
 <td style="text-align:left;">
-33,818
+58,154
 </td>
 <td style="text-align:left;">
-23,399 (69.2%)
+47,814 (82.2%)
 </td>
 <td style="text-align:left;">
-23,026 -23,811 (68.1% - 70.4%)
+47,099 - 48,576 (81% - 83.5%)
 </td>
 <td style="text-align:left;">
-9,230 (27.3%)
+10,197 (17.5%)
 </td>
 <td style="text-align:left;">
-1,189 (3.5%)
+143 (0.2%)
 </td>
 <td style="text-align:left;">
-777 - 1,562 (2.3% - 4.6%)
+-619 - 858 (-1.1% - 1.5%)
 </td>
 </tr>
 <tr>
@@ -1343,22 +1748,22 @@ Male: 75-84
 Male: 85+
 </td>
 <td style="text-align:left;">
-35,553
+58,909
 </td>
 <td style="text-align:left;">
-24,203 (68.1%)
+49,241 (83.6%)
 </td>
 <td style="text-align:left;">
-21,320 -27,111 (60% - 76.3%)
+41,247 - 57,229 (70% - 97.1%)
 </td>
 <td style="text-align:left;">
-9,356 (26.3%)
+10,237 (17.4%)
 </td>
 <td style="text-align:left;">
-1,994 (5.6%)
+-569 (-1%)
 </td>
 <td style="text-align:left;">
--914 - 4,877 (-2.6% - 13.7%)
+-8,557 - 7,425 (-14.5% - 12.6%)
 </td>
 </tr>
 </tbody>
@@ -1366,21 +1771,21 @@ Male: 85+
 <p><br />
 </p>
 </div>
-<div id="england-and-wales-younger-age-groups-deaths-from-week-ending-06032020-to-week-ending-12062020" class="section level3">
-<h3>England and Wales, younger age groups: Deaths from week ending 06/03/2020 to week ending 12/06/2020</h3>
+<div id="limitations" class="section level3">
+<h3>Limitations</h3>
 <p><br />
 </p>
-<p><img src="Youngerage_update.png" /></p>
-<p>Website updated on 26/06/2020.</p>
+<p>The pandemic is ongoing, and we only estimate excess deaths until the week ending in 09 October 2020. It is possible that the pandemic will impact on deaths in months and even years to come, including due to delays in cancer treatment resulting in treatable cancer becoming untreatable and causing death occurring months or years later. There is inherent uncertainty in forecasting deaths. We find that our model reliably predicts reported deaths in the pre-pandemic period between July 2019 and February 2020 based on data going back to 2010 (<a href="https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-18-COVID19-Report-28.pdf">Report 28</a>). However, there is no guarantee that a model that fits the pre-pandemic time period is forecasting well for the pandemic period that saw unprecedented changes in hospital care provision, patient behaviour, and many other factors including possibly the reporting of deaths itself. The uncertainty around our forecasts may take account of some but not all of this uncertainty. Moreover, we cannot take account of irregularities in the reporting of COVID-19 and non-COVID-19 deaths. For further limitations see (<a href="https://www.imperial.ac.uk/media/imperial-college/medicine/mrc-gida/2020-06-18-COVID19-Report-28.pdf">Report 28</a>).</p>
+<p><br />
+</p>
+<p>Website updated on 20/10/2020.</p>
 </div>
 
 <div id = "footer">
   &nbsp
 <p style="text-align:center;">
-<a href = "https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/">
-<img align = “left” class = "imperiallogo" src="MRC-GIDA-logo.png" width="200" height=“100”></a> <a href = "https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/covid-19/"> <img align = “left” class = “imperiallogo" src="ICL-JIDEA-1.png" width="200" height=“100”></a>
-</br>
-</br>
+<a href = "https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/covid-19/"> <img align = “left” id = “imperiallogo" src="ICL-JIDEA-1.png" style="width:300px;height:110px;"></a> <a href = "https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/">
+<img align = “left” id = "imperiallogo" src="MRC-GIDA-logo.png" style="width:300px;height:60px;"></a> </br>
 Website by Alessandra Lochen, Daniel Anderson, Giovanni Forchini, Katharina Hauck, Swapnil Mishra. This is an official product of the Imperial College COVID-19 response team: the WHO Collaborating Centre for Infectious Disease Modelling within the MRC Centre for Global Infectious Disease Analysis, J-IDEA, Imperial College London. 
 </br>
 </a>This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License</a>.
