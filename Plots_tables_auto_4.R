@@ -151,8 +151,8 @@ pp<-function(i){
   
   
   ## Toggle for full forecast / March onwards ###################################################################
-  #data <- data[data$Week.ended>=as.Date("2020-03-01"),] # dates for March onwards; comment out for full forecast
-  data <- data[data$Week.ended>=as.Date("2019-07-01"),] # dates for full forecast; comment out for March onwards
+  data <- data[data$Week.ended>=as.Date("2020-03-01"),] # dates for March onwards; comment out for full forecast
+  #data <- data[data$Week.ended>=as.Date("2019-07-01"),] # dates for full forecast; comment out for March onwards
   ###############################################################################################################
   
   
@@ -163,10 +163,10 @@ pp<-function(i){
   
   
   ## Toggle for full forecast / March onwards ###################################################################
-  #mdf <- mdf[!(mdf$variable == "signal"),] # for March onwards; comment this line out for full forecast
-  mdf$variable <- factor(mdf$variable, levels=c("fit","var","var_covid", "signal"), # take out "signal" for March onwards
-                         labels=c(paste("Expected 06/03-", format(max(mdf$Week.ended), "%d/%m"), sep = ""),
-                                  "Registered all-cause","Registered non-COVID deaths", "Predicted")) # take out "Predicted" for March onwards
+  mdf <- mdf[!(mdf$variable == "signal"),] # for March onwards; comment this line out for full forecast
+  mdf$variable <- factor(mdf$variable, levels=c("fit","var","var_covid"),#, "signal"), # take out "signal" for March onwards
+                         labels=c(paste("Forecasted 06/03-", format(max(mdf$Week.ended), "%d/%m"), sep = ""),
+                                  "Observed all-cause","Registered non-COVID deaths")) #, "Predicted" take out "Predicted" for March onwards
   #################################################################################################################
   
   
@@ -176,8 +176,8 @@ pp<-function(i){
     geom_line() + 
     
     ## Toggle for full forecast / March onwards ##################################################################
-    #scale_x_date(breaks=unique(mdf$Week.ended),date_labels = "%d/%m") + # for March onwards; comment out for full forecast
-    scale_x_date(breaks=unique(mdf$Week.ended),date_labels = "%m/%y", date_breaks = "1 month") + # for full forecast; comment out for March onwards
+    scale_x_date(breaks=unique(mdf$Week.ended)[c(TRUE,FALSE, FALSE)],date_labels = "%d/%m") + # for March onwards; comment out for full forecast
+    #scale_x_date(breaks=unique(mdf$Week.ended),date_labels = "%m/%y", date_breaks = "1 month") + # for full forecast; comment out for March onwards
     ##############################################################################################################
     
     theme_bw(base_size = 12, base_family = "Helvetica")+ theme_minimal() +
@@ -185,7 +185,7 @@ pp<-function(i){
     ggtitle(gsub("[.]"," ",sub(".csv", "",i)))+
     
     ## Toggle for full forecast / March onwards ##################################################################
-    scale_colour_manual(values = c("Black","Red", "Purple", "Blue")) + # take out "Blue" for March onwards
+    scale_colour_manual(values = c("Black","Red", "Purple")) + #, "Blue" take out "Blue" for March onwards
     ##############################################################################################################
   
     labs(colour = "Deaths", y ="Deaths", x = "")
@@ -228,35 +228,35 @@ grid.arrange(pp("All.45.64.csv")+theme(legend.position = "none")+ggtitle("All 45
 dev.off()
 
 # Plot older age groups with full forecast/March onwards
-pdf("Deaths_AllolderAllsex_MarOnwards.pdf", width = 11, height = 7) #_fullforecast.pdf
+pdf("Deaths_AllolderAllsex_MarOnwards.pdf", width = 15, height = 5) #_fullforecast.pdf
 grid.arrange(
   ## Full forecast order of plots with pdf dimensions width = 10, height = 7
-  pp("All.85..csv")+theme(legend.position = "none")+ggtitle("All 85+ yrs"),
-  pp("Female.85..csv")+theme(legend.position = "none")+ggtitle("Female 85+ yrs"),
-  pp("Male.85..csv")+theme(legend.position = "none")+ggtitle("Male 85+ yrs"),
-  pp("All.75.84.csv")+theme(legend.position = "none")+ggtitle("All 75-84 yrs"),
-  pp("Female.75.84.csv")+theme(legend.position = "none")+ggtitle("Female 75-84 yrs"),
-  pp("Male.75.84.csv")+theme(legend.position = "none")+ggtitle("Male 75-84 yrs"),
-  pp("All.65.74.csv")+theme(legend.position = "none")+ggtitle("All 65-74 yrs"),
-  pp("Female.65.74.csv")+theme(legend.position = "none")+ggtitle("Female 65-74 yrs"),
-  pp("Male.65.74.csv")+theme(legend.position = "none")+ggtitle("Male 65-74 yrs"),
-  pp("All.45.64.csv")+theme(legend.position = "none")+ggtitle("All 45-64 yrs"),
-  pp("Female.45.64.csv")+theme(legend.position = "none")+ggtitle("Female 45-64 yrs"),
-  pp("Male.45.64.csv")+theme(legend.position = "none")+ggtitle("Male 45-64 yrs"),
-  bottom = legendgrob, ncol = 3)
+  # pp("All.85..csv")+theme(legend.position = "none")+ggtitle("All 85+ yrs"),
+  # pp("Female.85..csv")+theme(legend.position = "none")+ggtitle("Female 85+ yrs"),
+  # pp("Male.85..csv")+theme(legend.position = "none")+ggtitle("Male 85+ yrs"),
+  # pp("All.75.84.csv")+theme(legend.position = "none")+ggtitle("All 75-84 yrs"),
+  # pp("Female.75.84.csv")+theme(legend.position = "none")+ggtitle("Female 75-84 yrs"),
+  # pp("Male.75.84.csv")+theme(legend.position = "none")+ggtitle("Male 75-84 yrs"),
+  # pp("All.65.74.csv")+theme(legend.position = "none")+ggtitle("All 65-74 yrs"),
+  # pp("Female.65.74.csv")+theme(legend.position = "none")+ggtitle("Female 65-74 yrs"),
+  # pp("Male.65.74.csv")+theme(legend.position = "none")+ggtitle("Male 65-74 yrs"),
+  # pp("All.45.64.csv")+theme(legend.position = "none")+ggtitle("All 45-64 yrs"),
+  # pp("Female.45.64.csv")+theme(legend.position = "none")+ggtitle("Female 45-64 yrs"),
+  # pp("Male.45.64.csv")+theme(legend.position = "none")+ggtitle("Male 45-64 yrs"),
+  # bottom = legendgrob, ncol = 3)
 
   ## March onwards order of plots with pdf dimensions width = 15, height = 5
-  # pp("Female.85..csv")+theme(legend.position = "none")+ggtitle("Female 85+ yrs"),
-  # pp("Female.75.84.csv")+theme(legend.position = "none")+ggtitle("Female 75-84 yrs"),
-  # pp("Female.65.74.csv")+theme(legend.position = "none")+ggtitle("Female 65-74 yrs"),
-  # pp("Female.45.64.csv")+theme(legend.position = "none")+ggtitle("Female 45-64 yrs"),
-  # pp("Female.15.44.csv")+theme(legend.position = "none")+ggtitle("Female 15-44 yrs"),
-  # pp("Male.85..csv")+theme(legend.position = "none")+ggtitle("Male 85+ yrs"),
-  # pp("Male.75.84.csv")+theme(legend.position = "none")+ggtitle("Male 75-84 yrs"),
-  # pp("Male.65.74.csv")+theme(legend.position = "none")+ggtitle("Male 65-74 yrs"),
-  # pp("Male.45.64.csv")+theme(legend.position = "none")+ggtitle("Male 45-64 yrs"),
-  # pp("Male.15.44.csv")+theme(legend.position = "none")+ggtitle("Male 15-44 yrs"),
-  # bottom = legendgrob, ncol=5)
+  pp("Female.85..csv")+theme(legend.position = "none")+ggtitle("Female 85+ yrs"),
+  pp("Female.75.84.csv")+theme(legend.position = "none")+ggtitle("Female 75-84 yrs"),
+  pp("Female.65.74.csv")+theme(legend.position = "none")+ggtitle("Female 65-74 yrs"),
+  pp("Female.45.64.csv")+theme(legend.position = "none")+ggtitle("Female 45-64 yrs"),
+  pp("Female.15.44.csv")+theme(legend.position = "none")+ggtitle("Female 15-44 yrs"),
+  pp("Male.85..csv")+theme(legend.position = "none")+ggtitle("Male 85+ yrs"),
+  pp("Male.75.84.csv")+theme(legend.position = "none")+ggtitle("Male 75-84 yrs"),
+  pp("Male.65.74.csv")+theme(legend.position = "none")+ggtitle("Male 65-74 yrs"),
+  pp("Male.45.64.csv")+theme(legend.position = "none")+ggtitle("Male 45-64 yrs"),
+  pp("Male.15.44.csv")+theme(legend.position = "none")+ggtitle("Male 15-44 yrs"),
+  bottom = legendgrob, ncol=5)
 dev.off()
 
 # Plot younger age groups all sexes (full forecast only)
@@ -330,8 +330,12 @@ cumulative <- full_join(observedcumulativedeaths, cumulativecovid)
 cumulative <- full_join(cumulative, cumulative_expected)
 cumulative <- cumulative %>% drop_na()
 colnames(cumulative) <- c("Week.ended", "region","deaths","covid","lwr","upr","fit")
-cumulative <- cumulative %>% mutate(excess.ncovid = deaths - covid - fit) %>% 
-  mutate(excess.ncovid_lwr = deaths - covid - upr) %>% mutate(excess.ncovid_upr = deaths - covid - lwr)
+# cumulative non-covid excess
+#cumulative <- cumulative %>% mutate(excess.ncovid = deaths - covid - fit) %>%
+# mutate(excess.ncovid_lwr = deaths - covid - upr) %>% mutate(excess.ncovid_upr = deaths - covid - lwr)
+# cumulative excess
+cumulative <- cumulative %>% mutate(excess.deaths = deaths - fit) %>% 
+   mutate(excess.deaths_lwr = deaths - upr) %>% mutate(excess.deaths_upr = deaths - lwr)
 cumulative$region <- gsub("[.]"," ",cumulative$region)
 cumulative$region <- gsub("All", "All:", cumulative$region)
 cumulative$region <- gsub("Female", "Female:", cumulative$region)
@@ -340,6 +344,7 @@ cumulative$region <- gsub("45 64", "45-64", cumulative$region)
 cumulative$region <- gsub("65 74", "65-74", cumulative$region)
 cumulative$region <- gsub("75 84", "75-84", cumulative$region)
 cumulative$region <- gsub("85 ", "85+", cumulative$region)
+
 
 Regional_cumulative <- cumulative %>% filter(region %in% c("Yorkshire and The Humber", "North East", "North West", 
                         "East Midlands", "West Midlands", "East", "London",
@@ -513,7 +518,9 @@ write.csv(tab3bb, "TableA3XS_regional.csv")
 # colnames(tab3c)[1] <- "Week ended"
 # write.csv(tab3c, "TablecumulativeweeklyXS_agegrp.csv")
 
-# Table A4: Weekly cumulative excess non-COVID-19 deaths by age group and sex
+
+
+# Table A5: Weekly cumulative excess non-COVID-19 deaths by age group and sex
 Agegrp_temp<-rbind(ExtractData("All.85..csv"),
                    ExtractData("Male.85..csv"),
                    ExtractData("Female.85..csv"),
@@ -548,6 +555,40 @@ tab3cc <- Agegrp_temp %>% group_by(region) %>%
 tab3cc <- reshape2::dcast(tab3cc, Week.ended ~ region)
 write.csv(tab3cc, "TableA4weeklyXS_agegrp.csv")
 
+# Table A6: Weekly cumulative non-covid excess deaths by age group and sex
+Agegrp_temp<-rbind(ExtractData("All.85..csv"),
+                   ExtractData("Male.85..csv"),
+                   ExtractData("Female.85..csv"),
+                   ExtractData("All.75.84.csv"),
+                   ExtractData("Male.75.84.csv"),
+                   ExtractData("Female.75.84.csv"),
+                   ExtractData("All.65.74.csv"),
+                   ExtractData("Male.65.74.csv"),
+                   ExtractData("Female.65.74.csv"),
+                   ExtractData("All.45.64.csv"),
+                   ExtractData("Male.45.64.csv") ,
+                   ExtractData("Female.45.64.csv"))
+Agegrp_temp$n<-rowSums(Agegrp_temp[,c('fit','signal')],na.rm = T)
+Agegrp_temp<-Agegrp_temp[Agegrp_temp$Week.ended>=ymd("2020-03-01"),]
+Agegrp_temp$signal<-NULL
+Agegrp_temp$region <- gsub("[.]"," ",Agegrp_temp$region)
+Agegrp_temp<-Agegrp_temp %>% mutate(excess.deaths.upr=deaths-covid-lwr,
+                                    excess.deaths.lwr=deaths-covid-upr,
+                                    excess.deaths.expected=deaths-covid-fit) # this temp used for coefficient/multiplier (see below)
+Agegrp_temp$region <- gsub("All", "All:", Agegrp_temp$region)
+Agegrp_temp$region <- gsub("Female", "Female:", Agegrp_temp$region)
+Agegrp_temp$region <- gsub("Male", "Male:", Agegrp_temp$region)
+Agegrp_temp$region <- gsub("45 64", "45-64", Agegrp_temp$region)
+Agegrp_temp$region <- gsub("65 74", "65-74", Agegrp_temp$region)
+Agegrp_temp$region <- gsub("75 84", "75-84", Agegrp_temp$region)
+Agegrp_temp$region <- gsub("85 ", "85+", Agegrp_temp$region)
+tab3cc <- Agegrp_temp %>% group_by(region) %>% 
+  mutate(excess_ncovid = paste(format(as.integer(excess.deaths.expected), big.mark =",", trim = TRUE), " (",
+                               format(as.integer(excess.deaths.lwr), big.mark =",", trim = TRUE), " - ",
+                               format(as.integer(excess.deaths.upr), big.mark =",", trim = TRUE), ")", sep = "")) %>%
+  select(Week.ended, region, excess_ncovid)
+tab3cc <- reshape2::dcast(tab3cc, Week.ended ~ region)
+write.csv(tab3cc, "TableA4weeklyXS_agegrp.csv")
 
 # Table A5: Coefficient multiplier COVID-19 to non-COVID-19 excess deaths
 Regional_temp$coeff <- Regional_temp$excess.deaths.expected/Regional_temp$covid
@@ -562,3 +603,28 @@ temp_coeff$region <- gsub("[.]"," ",temp_coeff$region)
 temp_coeff <- reshape2::dcast(temp_coeff, Week.ended~region)
 colnames(temp_coeff)[1] <- "Week ended"
 write.csv(temp_coeff, "TableA5Coeff_Regional.csv")
+
+### weekly cumulative excess deaths (covid + non-covid)
+plot_weeklycumdeaths <- function(cat, tempdf) {
+  ggplot(tempdf %>% filter(region == cat)) + 
+    geom_hline(yintercept = 0, linetype = "dashed") +
+    geom_point(aes(x = Week.ended, y = excess.deaths)) +
+    geom_errorbar(aes(x = Week.ended, ymin = excess.deaths_lwr, ymax = excess.deaths_upr)) +
+    labs(x = "Week ended", y = "Cumulative excess deaths", title = cat) +
+    theme_minimal() + theme_bw()
+}
+
+regional_weeklycumXS <- lapply(unique(Regional_cumulative$region), 
+                               function(x) plot_weeklycumdeaths(cat = x, tempdf = Regional_cumulative))
+ggarrange(regional_weeklycumXS[[1]],regional_weeklycumXS[[2]],regional_weeklycumXS[[3]], regional_weeklycumXS[[4]],
+          regional_weeklycumXS[[5]],regional_weeklycumXS[[6]],regional_weeklycumXS[[7]],regional_weeklycumXS[[8]],
+          regional_weeklycumXS[[9]]) #pdf 10x6.5
+ggarrange(regional_weeklycumXS[[11]], regional_weeklycumXS[[10]]) # pdf 7x3.5
+
+agegrp_weeklycumXS <- lapply(unique(Agegrp_cumulative$region), 
+                             function(x) plot_weeklycumdeaths(cat = x, tempdf = Agegrp_cumulative))
+ggarrange(agegrp_weeklycumXS[[12]],agegrp_weeklycumXS[[11]],agegrp_weeklycumXS[[10]],agegrp_weeklycumXS[[9]],
+          agegrp_weeklycumXS[[8]],agegrp_weeklycumXS[[7]],agegrp_weeklycumXS[[6]],agegrp_weeklycumXS[[5]], 
+          nrow = 2, ncol = 4) #pdf 15x6
+ggarrange(agegrp_weeklycumXS[[4]],agegrp_weeklycumXS[[3]],agegrp_weeklycumXS[[2]],agegrp_weeklycumXS[[1]]) #pdf 6x5
+
